@@ -16,6 +16,7 @@ class Polygon: Shape<T>
 {
   public:
     Polygon();
+    Polygon(const Polygon<T, size>& other);
     virtual ~Polygon()                                               = default;
 
     // Accesss member points
@@ -29,13 +30,16 @@ class Polygon: Shape<T>
     // Area differences between shapes.
     virtual T operator+(const Shape<T>&) const;
     virtual T operator-(const Shape<T>&) const;
+
+    virtual size_t numSides() const;
     
     virtual T area() const;
     virtual T sideLength() const;
+    virtual T perimeter() const;
 
     // Get coordinates for corners (noncircle).
     virtual Coordinate<T>* getPoints();
-    virtual Coordinate<T> center() const;
+    virtual Cartesian<T> center() const;
 
   private:
     array<Coordinate<T>, size> m_data;

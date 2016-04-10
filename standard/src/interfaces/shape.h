@@ -34,10 +34,11 @@ class Shape
     
     virtual T area() const                                                 = 0;
     virtual T sideLength() const                                           = 0;
+    virtual T perimeter() const                                            = 0;
 
     // Get coordinates for corners (noncircle), center (circle).
     virtual Coordinate<T>* getPoints()                                     = 0;
-    virtual Coordinate<T> center() const                                   = 0;
+    virtual Cartesian<T> center() const                                    = 0;
 
     // Transform points
     //Shape& transform(~lambda~);
