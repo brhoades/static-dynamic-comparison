@@ -15,7 +15,7 @@ class Cartesian: public Coordinate<T>
   public:
     Cartesian();
     Cartesian(const T& x, const T& y);
-    virtual ~Cartesian()                                            = default;
+    virtual ~Cartesian()                                             = default;
 
     virtual bool operator==(const Coordinate<T>&) const;
     virtual bool operator!=(const Coordinate<T>&) const;

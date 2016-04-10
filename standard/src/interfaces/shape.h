@@ -9,33 +9,33 @@
  */
 #pragma once
 
-#include "coordinates.h"
+#include "coordinate.h"
 
 template <class T>
 class Shape
 {
   public:
-    Shape()                                                     = default;
-    virtual ~Shape()                                            = default;
+    Shape()                                                          = default;
+    virtual ~Shape()                                                 = default;
 
     // Accesss member points
-    virtual T& operator[](const size_t index)                   = nullptr;
-    virtual T operator[](const size_t index)                    = nullptr;
+    virtual Coordinate<T>& operator[](const size_t index)                  = 0;
+    virtual Coordinate<T> operator[](const size_t index) const             = 0;
 
     // Shape comparison
-    virtual bool operator==(const Shape&) const                 = nullptr;
-    virtual bool operator!=(const Shape&) const                 = nullptr;
+    virtual bool operator==(const Shape<T>&) const                         = 0;
+    virtual bool operator!=(const Shape<T>&) const                         = 0;
 
     // Area differences between shapes.
-    virtual T operator+(const Shape&) const                     = nullptr;
-    virtual T operator-(const Shape&) const                     = nullptr;
+    virtual T operator+(const Shape<T>&) const                             = 0;
+    virtual T operator-(const Shape<T>&) const                             = 0;
     
-    virtual T area() const                                      = nullptr;
-    virtual T sideLength() const                                = nullptr;
+    virtual T area() const                                                 = 0;
+    virtual T sideLength() const                                           = 0;
 
-    // Get coordinates for corners (noncircle) center (circle)
-    virtual Array<Coordinate&> getPoints()                      = nullptr;
-    virtual Coordinate& center()                                = nullptr;
+    // Get coordinates for corners (noncircle), center (circle).
+    virtual Coordinate<T>* getPoints()                                     = 0;
+    virtual Coordinate<T> center() const                                   = 0;
 
     // Transform points
     //Shape& transform(~lambda~);
