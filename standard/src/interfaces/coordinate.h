@@ -9,6 +9,10 @@
  */
 #pragma once
 
+#include <cstdlib>
+
+using namespace std;
+
 template <class T>
 class Coordinate
 {
@@ -17,15 +21,14 @@ class Coordinate
     virtual ~Coordinate()                                            = default;
 
     // Coordinate comparison
-    virtual bool operator==(const Coordinate&) const                 = nullptr;
-    virtual bool operator!=(const Coordinate&) const                 = nullptr;
+    virtual bool operator==(const Coordinate<T>&) const              = 0;
+    virtual bool operator!=(const Coordinate<T>&) const              = 0;
 
     // Accesss member values
-    virtual T& operator[](const size_t index)                        = nullptr;
-    virtual T operator[](const size_t index)                         = nullptr;
+    virtual T& operator[](const size_t index)                        = 0;
+    virtual T operator[](const size_t index) const                   = 0;
 
-
-    virtual T distance(const Coordinate&) const                      = nullptr;
+    virtual T distance(const Coordinate<T>&) const                   = 0;
 
     // Transform points
     //Coordinate& transform(~lambda~);
