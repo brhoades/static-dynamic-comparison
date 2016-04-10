@@ -70,7 +70,7 @@ bool Polar<T>::operator==(const Coordinate<T>& other) const
 template <class T>
 bool Polar<T>::operator!=(const Coordinate<T>& other) const
 {
-  return operator==(other);
+  return !operator==(other);
 }
 
 template <class T>
