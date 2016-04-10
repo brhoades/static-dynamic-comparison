@@ -11,6 +11,9 @@
 
 #include "../interfaces/shape.h"
 
+template <class T>
+ostream& operator<<(ostream&, const Shape<T>&);
+
 template <class T, size_t size>
 class Polygon: Shape<T>
 {

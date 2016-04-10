@@ -6,7 +6,6 @@
  * Cartesian Coordinate
  */
 
-#include <iostream>
 #include <exception>
 #include <cmath>
 
@@ -138,4 +137,13 @@ void Cartesian<T>::fromCartesian(const Cartesian<T>& rhs)
 {
   m_x = rhs.m_x;
   m_y = rhs.m_y;
+}
+
+/* Global Functions */
+template <class T>
+ostream& operator<<(ostream& os, const Cartesian<T>& rhs)
+{
+  os << "(" << rhs.x() << ", " << rhs.y() << ")";
+
+  return os;
 }

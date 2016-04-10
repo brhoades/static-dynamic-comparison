@@ -11,10 +11,17 @@
 
 #include <cstdlib>
 
+using namespace std;
+
+// Forward declarations
+template <class T>
+class Coordinate;
+
+template <class T>
+ostream& operator<<(ostream&, const Coordinate<T>&);
+
 template <class T>
 class Cartesian;
-
-using namespace std;
 
 template <class T>
 class Coordinate
@@ -52,3 +59,5 @@ class Coordinate
     // Transform points
     //Coordinate& transform(~lambda~);
 };
+
+#include "coordinate.hpp"

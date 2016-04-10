@@ -7,7 +7,15 @@
  */
 #pragma once
 
+template <class T>
+class Cartesian;
+
+#include <iostream>
+
 #include "../interfaces/coordinate.h"
+
+template <class T>
+ostream& operator<<(ostream&, const Cartesian<T>&);
 
 template <class T>
 class Cartesian: public Coordinate<T>

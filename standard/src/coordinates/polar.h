@@ -7,7 +7,15 @@
  */
 #pragma once
 
+#include <iostream>
+
 #include "../interfaces/coordinate.h"
+
+template <class T>
+class Polar;
+
+template <class T>
+ostream& operator<<(ostream&, const Polar<T>&);
 
 template <class T>
 class Polar: public Coordinate<T>

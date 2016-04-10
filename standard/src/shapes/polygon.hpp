@@ -82,16 +82,11 @@ T Polygon<T, size>::area() const
 {
   // abuse our interface here for maximum slow.
 
-  // this is a regular polygon, so we can need the distance from a side
-  // to the "center".
-  // First, let's get a center point.
-  Cartesian<T> center = this->center();
-
   // get average of any two points (first two will do)
   Cartesian<T> midpoint = (std::copy(m_data[0]) += m_data[1]) /= 2;
 
   // 1/2 apothom * perimeter
-  return (1/2.f)*center.distance(midpoint)*perimeter();
+  return (1/2.f)*this->center.distance(midpoint)*perimeter();
 }
 
 template <class T, size_t size>

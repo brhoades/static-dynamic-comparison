@@ -20,8 +20,8 @@
 
 .PHONY: all clean
 
-CXX = /usr/bin/clang++
-CXXFLAGS = -g -Wall -W -pedantic-errors -std=c++11
+CXX = /usr/bin/g++
+CXXFLAGS = -std=c++11 -Wall -W -pedantic-errors -g
 
 # The following 2 lines only work with gnu make.
 # It's much nicer than having to list them out,

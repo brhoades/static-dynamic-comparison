@@ -6,7 +6,6 @@
  * Polar Coordinate
  */
 
-#include <iostream>
 #include <exception>
 #include <cmath>
 
@@ -132,4 +131,13 @@ template <class T>
 Polar<T>::operator Cartesian<T>() const
 {
   return this->asCartesian();
+}
+
+/* Global Functions */
+template <class T>
+ostream& operator<<(ostream& os, const Polar<T>& rhs)
+{
+  os << "(" << rhs.r() << ", " << rhs.theta() << "㎭)";
+
+  return os;
 }
