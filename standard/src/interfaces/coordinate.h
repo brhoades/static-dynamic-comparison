@@ -11,6 +11,9 @@
 
 #include <cstdlib>
 
+template <class T>
+class Cartesian;
+
 using namespace std;
 
 template <class T>
@@ -29,6 +32,9 @@ class Coordinate
     virtual T operator[](const size_t index) const                   = 0;
 
     virtual T distance(const Coordinate<T>&) const                   = 0;
+
+    // Convert to cartesian
+    virtual operator Cartesian<T>() const                            = 0;
 
     // Transform points
     //Coordinate& transform(~lambda~);

@@ -3,19 +3,19 @@
  * CS5201
  * CRTP Lecture Example
  * 
- * Cartesian Coordinate
+ * Polar Coordinate
  */
 #pragma once
 
 #include "../interfaces/coordinate.h"
 
 template <class T>
-class Cartesian: public Coordinate<T>
+class Polar: public Coordinate<T>
 {
   public:
-    Cartesian();
-    Cartesian(const T& x, const T& y);
-    virtual ~Cartesian()                                            = default;
+    Polar();
+    Polar(const T& r, const T& theta);
+    virtual ~Polar()                                                 = default;
 
     virtual bool operator==(const Coordinate<T>&) const;
     virtual bool operator!=(const Coordinate<T>&) const;
@@ -27,14 +27,14 @@ class Cartesian: public Coordinate<T>
 
     virtual operator Cartesian<T>() const;
 
-    virtual T& x() {return m_x;}
-    virtual T x() const {return m_x;}
+    virtual T& r() {return m_r;}
+    virtual T r() const {return m_r;}
 
-    virtual T& y() {return m_y;}
-    virtual T y() const {return m_y;}
+    virtual T& theta() {return m_theta;}
+    virtual T theta() const {return m_theta;}
 
   protected:
-    T m_x, m_y;
+    T m_r, m_theta;
 };
 
-#include "cartesian.hpp"
+#include "polar.hpp"

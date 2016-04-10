@@ -29,7 +29,7 @@ bool Cartesian<T>::operator==(const Coordinate<T>& other) const
 template <class T>
 bool Cartesian<T>::operator!=(const Coordinate<T>& other) const
 {
-  return operator!=(other);
+  return operator==(other);
 }
 
 template <class T>
@@ -63,4 +63,10 @@ T Cartesian<T>::distance(const Coordinate<T>& other) const
   T x = m_x - other_cartesian.m_x, y = m_y - other_cartesian.m_y;
 
   return sqrt(x*x + y*y);
+}
+
+template <class T>
+Cartesian<T>::operator Cartesian<T>() const
+{
+  return *this;
 }
