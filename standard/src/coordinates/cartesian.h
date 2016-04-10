@@ -15,7 +15,17 @@ class Cartesian: public Coordinate<T>
   public:
     Cartesian();
     Cartesian(const T& x, const T& y);
+    Cartesian(const Cartesian<T>& other);
     virtual ~Cartesian()                                             = default;
+
+    // Arithmetic
+    virtual Coordinate<T>& operator+=(const Coordinate<T>&);
+    virtual Coordinate<T>& operator-=(const Coordinate<T>&);
+
+    // Transformation
+    virtual Coordinate<T>& operator/=(const T&);
+
+    virtual Coordinate<T>& operator*=(const T&);
 
     virtual bool operator==(const Coordinate<T>&) const;
     virtual bool operator!=(const Coordinate<T>&) const;
@@ -26,6 +36,10 @@ class Cartesian: public Coordinate<T>
     virtual T distance(const Coordinate<T>&) const;
 
     virtual operator Cartesian<T>() const;
+
+    // As cartesian
+    virtual Cartesian<T> asCartesian() const;
+    virtual void fromCartesian(const Cartesian<T>&);
 
     virtual T& x() {return m_x;}
     virtual T x() const {return m_x;}

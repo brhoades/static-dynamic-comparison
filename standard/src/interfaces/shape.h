@@ -29,6 +29,8 @@ class Shape
     // Area differences between shapes.
     virtual T operator+(const Shape<T>&) const                             = 0;
     virtual T operator-(const Shape<T>&) const                             = 0;
+
+    virtual size_t numSides() const                                        = 0;
     
     virtual T area() const                                                 = 0;
     virtual T sideLength() const                                           = 0;

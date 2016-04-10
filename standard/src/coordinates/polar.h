@@ -17,6 +17,15 @@ class Polar: public Coordinate<T>
     Polar(const T& r, const T& theta);
     virtual ~Polar()                                                 = default;
 
+    // Arithmetic
+    virtual Coordinate<T>& operator+=(const Coordinate<T>&);
+    virtual Coordinate<T>& operator-=(const Coordinate<T>&);
+
+    // Transformation
+    virtual Coordinate<T>& operator/=(const T&);
+
+    virtual Coordinate<T>& operator*=(const T&);
+
     virtual bool operator==(const Coordinate<T>&) const;
     virtual bool operator!=(const Coordinate<T>&) const;
 
@@ -26,6 +35,8 @@ class Polar: public Coordinate<T>
     virtual T distance(const Coordinate<T>&) const;
 
     virtual operator Cartesian<T>() const;
+    virtual Cartesian<T> asCartesian() const;
+    virtual void fromCartesian(const Cartesian<T>&);
 
     virtual T& r() {return m_r;}
     virtual T r() const {return m_r;}
