@@ -20,6 +20,14 @@ Polar<T>::Polar(const T& r, const T& theta): m_r(r), m_theta(theta)
 {
 }
 
+template <class T>
+Coordinate<T>& Polar<T>::operator=(const Coordinate<T>& rhs)
+{
+  this->fromCartesian(rhs.asCartesian());
+
+  return *this;
+}
+
 // Arithmetic
 template <class T>
 Coordinate<T>& Polar<T>::operator+=(const Coordinate<T>& rhs)
@@ -94,7 +102,7 @@ template <class T>
 T Polar<T>::distance(const Coordinate<T>& other) const
 {
   const Cartesian<T>& this_cartesian = this->asCartesian();
-  const Cartesian<T>& other_cartesian = other->asCartesian();
+  const Cartesian<T>& other_cartesian = other.asCartesian();
   T x = this_cartesian.x() - other_cartesian.x(),
     y = this_cartesian.y() - other_cartesian.y();
 

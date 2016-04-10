@@ -18,6 +18,8 @@ class Cartesian: public Coordinate<T>
     Cartesian(const Cartesian<T>& other);
     virtual ~Cartesian()                                             = default;
 
+    virtual Coordinate<T>& operator=(const Coordinate<T>&);
+
     // Arithmetic
     virtual Coordinate<T>& operator+=(const Coordinate<T>&);
     virtual Coordinate<T>& operator-=(const Coordinate<T>&);

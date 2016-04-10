@@ -17,6 +17,8 @@ class Polar: public Coordinate<T>
     Polar(const T& r, const T& theta);
     virtual ~Polar()                                                 = default;
 
+    virtual Coordinate<T>& operator=(const Coordinate<T>&);
+
     // Arithmetic
     virtual Coordinate<T>& operator+=(const Coordinate<T>&);
     virtual Coordinate<T>& operator-=(const Coordinate<T>&);

@@ -22,6 +22,8 @@ class Coordinate
   public:
     virtual ~Coordinate()                                            = default;
 
+    virtual Coordinate<T>& operator=(const Coordinate<T>&)                 = 0;
+
     // Arithmetic
     virtual Coordinate<T>& operator+=(const Coordinate<T>&)                = 0;
     virtual Coordinate<T>& operator-=(const Coordinate<T>&)                = 0;

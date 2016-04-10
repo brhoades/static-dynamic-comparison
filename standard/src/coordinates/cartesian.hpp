@@ -26,6 +26,14 @@ Cartesian<T>::Cartesian(const Cartesian<T>& other): Cartesian(other.m_x,
 {
 }
 
+template <class T>
+Coordinate<T>& Cartesian<T>::operator=(const Coordinate<T>& rhs)
+{
+  this->fromCartesian(rhs.asCartesian());
+
+  return *this;
+}
+
 // Arithmetic
 template <class T>
 Coordinate<T>& Cartesian<T>::operator+=(const Coordinate<T>& rhs)
