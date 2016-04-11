@@ -137,7 +137,6 @@ T Polygon<T>::perimeter() const
 template <class T>
 bool Polygon<T>::isInShape(const Coordinate<T>& p) const
 {
-  auto p_xy = p.asCartesian();
   const Coordinate<T>* right = m_vertices[0];
   const Coordinate<T>* left = m_vertices[1];
 
@@ -155,7 +154,7 @@ bool Polygon<T>::isInShape(const Coordinate<T>& p) const
     else // wrap around back to first.
       right = m_vertices[0];
 
-    T right_distance = p.distance(*right), left_distance = p.distance(*left);
+    T right_distance = right->distance(p), left_distance = left->distance(p);
 
     T sum = 0;
 

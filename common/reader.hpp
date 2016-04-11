@@ -6,8 +6,6 @@
  * Reads coordinates from a file.
  */
 
-#include <cstring>
-
 template <class T, template <class T> class System>
 vector<System<T>> CoordReader<T, System>::operator()(const char* fname) const
 {
@@ -20,12 +18,12 @@ vector<System<T>> CoordReader<T, System>::operator()(const char* fname) const
     exit(1);
   }
 
-  char first[10], second[10];
-  while(!fs.eof())
+  while(!fs.eof() and fs.good())
   {
+    T first, second;
     fs >> first >> second;
     
-    System<T> tmp(atof(first), atof(second));
+    System<T> tmp(first, second);
     ret.push_back(tmp);
   }
 
