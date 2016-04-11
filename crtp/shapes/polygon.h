@@ -12,42 +12,45 @@
 #include "../interfaces/shape.h"
 
 template <class T, template <class T> class System>
-ostream& operator<<(ostream&, const Shape<T,System>&);
+class Polygon;
 
 template <class T, template <class T> class System>
-class Polygon: Shape<T,System>
+ostream& operator<<(ostream&, const Shape<T,System,Polygon>&);
+
+template <class T, template <class T> class System>
+class Polygon: public Shape<T,System,Polygon>
 {
   public:
     Polygon();
     Polygon(const Polygon<T,System>& other);
-    virtual ~Polygon();
+    ~Polygon();
 
     // Accesss member points
-    virtual Coordinate<T,System>& operator[](const size_t index);
-    virtual const Coordinate<T,System>& operator[](const size_t index) const;
+    Coordinate<T,System>& operator[](const size_t index);
+    const Coordinate<T,System>& operator[](const size_t index) const;
 
     // Polygon comparison
-    virtual bool operator==(const Shape<T,System>&) const;
-    virtual bool operator!=(const Shape<T,System>&) const;
+    bool operator==(const Shape<T,System,Polygon>&) const;
+    bool operator!=(const Shape<T,System,Polygon>&) const;
 
     // Area differences between shapes.
-    virtual T operator+(const Shape<T,System>&) const;
-    virtual T operator-(const Shape<T,System>&) const;
+    T operator+(const Shape<T,System,Polygon>&) const;
+    T operator-(const Shape<T,System,Polygon>&) const;
 
-    virtual size_t numSides() const;
+    size_t numSides() const;
 
     void addVertex(const Cartesian<T>&);
     
-    virtual T area() const;
-    virtual T sideLength() const;
-    virtual T perimeter() const;
+    T area() const;
+    T sideLength() const;
+    T perimeter() const;
 
     // Get coordinates for corners (noncircle).
-    virtual Coordinate<T,System>** getPoints();
-    virtual Cartesian<T> center() const;
+    Coordinate<T,System>** getPoints();
+    Cartesian<T> center() const;
 
     // Bounding functions
-    virtual bool isInShape(const Coordinate<T,System>&) const;
+    bool isInShape(const Coordinate<T,System>&) const;
   private:
     vector<Coordinate<T,System>*> m_vertices;
 };

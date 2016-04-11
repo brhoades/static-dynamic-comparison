@@ -11,35 +11,72 @@
 
 #include "coordinate.h"
 
-template <class T, template <class T> class System>
+template <class T, template <class T> class System, // T, System<T>
+          template <class T, template <class T> class System> class Derived> // Shape<T, Cartesian<T>>
 class Shape
 {
   public:
-    Shape()                                                          = default;
-    virtual ~Shape()                                                 = default;
-
     // Access member points
-    virtual Coordinate<T,System>& operator[](const size_t index)                  = 0;
-    virtual const Coordinate<T,System>& operator[](const size_t index) const      = 0;
+    Coordinate<T,System>& operator[](const size_t index)
+    {
+      return static_cast<Derived<T, System>*>(this)->operator[](index);
+    }
+    const Coordinate<T,System>& operator[](const size_t index) const
+    {
+      return static_cast<const Derived<T, System>*>(this)->operator[](index);
+    }
 
     // Shape comparison
-    virtual bool operator==(const Shape<T,System>&) const                         = 0;
-    virtual bool operator!=(const Shape<T,System>&) const                         = 0;
+    bool operator==(const Shape<T,System,Derived>& rhs) const
+    {
+      return static_cast<const Derived<T, System>*>(this)->operator==(rhs);
+    }
+    bool operator!=(const Shape<T,System,Derived>& rhs) const
+    {
+      return static_cast<const Derived<T, System>*>(this)->operator!=(rhs);
+    }
 
     // Area differences between shapes.
-    virtual T operator+(const Shape<T,System>&) const                             = 0;
-    virtual T operator-(const Shape<T,System>&) const                             = 0;
+    T operator+(const Shape<T,System,Derived>& rhs) const
+    {
+      return static_cast<const Derived<T, System>*>(this)->operator+(rhs);
+    }
+    T operator-(const Shape<T,System,Derived>& rhs) const
+    {
+      return static_cast<const Derived<T, System>*>(this)->operator-(rhs);
+    }
 
-    virtual size_t numSides() const                                        = 0;
+    size_t numSides() const
+    {
+      return static_cast<const Derived<T, System>*>(this)->numSides();
+    }
     
-    virtual T area() const                                                 = 0;
-    virtual T sideLength() const                                           = 0;
-    virtual T perimeter() const                                            = 0;
+    T area() const
+    {
+      return static_cast<const Derived<T, System>*>(this)->area();
+    }
+    T sideLength() const
+    {
+      return static_cast<const Derived<T, System>*>(this)->sideLength();
+    }
+    T perimeter() const
+    {
+      return static_cast<const Derived<T, System>*>(this)->perimeter();
+    }
 
     // Get coordinates for corners (noncircle), center (circle).
-    virtual Coordinate<T,System>** getPoints()                                    = 0;
-    virtual Cartesian<T> center() const                                    = 0;
+    Coordinate<T,System>** getPoints()
+    {
+      return static_cast<Derived<T, System>*>(this)->getPoints();
+    }
+    Cartesian<T> center() const
+    {
+      return static_cast<const Derived<T, System>*>(this)->center();
+    }
 
     // Bounding checks
-    virtual bool isInShape(const Coordinate<T,System>&) const                     = 0;
+    bool isInShape(const Coordinate<T,System>& p) const
+    {
+      return static_cast<const Derived<T, System>*>(this)->isInShape(p);
+    }
 };

@@ -45,7 +45,7 @@ const Coordinate<T,System>& Polygon<T,System>::operator[](const size_t index) co
 
 // Polygon comparison
 template <class T,template <class T> class System>
-bool Polygon<T,System>::operator==(const Shape<T,System>& rhs) const
+bool Polygon<T,System>::operator==(const Shape<T,System,Polygon>& rhs) const
 {
   if(rhs.numSides() != numSides())
     return false;
@@ -59,19 +59,19 @@ bool Polygon<T,System>::operator==(const Shape<T,System>& rhs) const
   return true;
 }
 template <class T,template <class T> class System>
-bool Polygon<T,System>::operator!=(const Shape<T,System>& rhs) const
+bool Polygon<T,System>::operator!=(const Shape<T,System,Polygon>& rhs) const
 {
   return !operator==(rhs);
 }
 
 // Area differences between shapes.
 template <class T,template <class T> class System>
-T Polygon<T,System>::operator+(const Shape<T,System>& rhs) const
+T Polygon<T,System>::operator+(const Shape<T,System,Polygon>& rhs) const
 {
   return area() + rhs.area();
 }
 template <class T,template <class T> class System>
-T Polygon<T,System>::operator-(const Shape<T,System>& rhs) const
+T Polygon<T,System>::operator-(const Shape<T,System,Polygon>& rhs) const
 {
   return area() - rhs.area();
 }
