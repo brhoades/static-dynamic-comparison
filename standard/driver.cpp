@@ -40,8 +40,10 @@ int main(int argc, char** argv)
 
   Polygon<double> shape;
 
+  cout << "Adding vertices: ";
   for(auto& p: vertices)
     shape.addVertex(p);
+  cout << "done" << endl;
 
   for(auto& p: testers)
     shape.isInShape(p);
