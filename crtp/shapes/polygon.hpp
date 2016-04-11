@@ -9,8 +9,6 @@
 template <class T,template <class T> class System>
 Polygon<T,System>::Polygon()
 {
-  if(m_vertices.size()<= 1)
-    throw domain_error("A regular polygon needs at least 3 sides.");
 }
 
 template <class T,template <class T> class System>
@@ -86,12 +84,10 @@ size_t Polygon<T,System>::numSides() const
 
 
 template <class T,template <class T> class System>
-void Polygon<T,System>::setVertex(const size_t index, const Cartesian<T>& coord)
+void Polygon<T,System>::addVertex(const Cartesian<T>& coord)
 {
-  delete m_vertices[index];
-
   // really forcing this interface
-  m_vertices[index] = new Cartesian<T>(coord);
+  m_vertices.push_back(new Cartesian<T>(coord));
 }
 
 template <class T,template <class T> class System>

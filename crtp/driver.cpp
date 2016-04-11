@@ -38,11 +38,11 @@ int main(int argc, char** argv)
 
   Polygon<double,Cartesian> shape;
 
-  for(auto i=0u; i<vertices.size(); i++)
-    shape.setVertex(i, vertices[0]);
+  for(auto& p: vertices)
+    shape.addVertex(p);
 
-  for(auto i=0u; i<testers.size(); i++)
-    shape.isInShape(testers[i]);
+  for(auto& p: testers)
+    shape.isInShape(p);
 
   return 0;
 }

@@ -36,7 +36,7 @@ class Polygon: Shape<T,System>
 
     virtual size_t numSides() const;
 
-    void setVertex(const size_t, const Cartesian<T>&);
+    void addVertex(const Cartesian<T>&);
     
     virtual T area() const;
     virtual T sideLength() const;
