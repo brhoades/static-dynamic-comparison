@@ -87,6 +87,16 @@ size_t Polygon<T, size>::numSides() const
   return size;
 }
 
+
+template <class T, size_t size>
+void Polygon<T, size>::setVertex(const size_t index, const Cartesian<T>& coord)
+{
+  delete m_verticies[index];
+
+  // really forcing this interface
+  m_verticies[index] = new Cartesian<T>(coord);
+}
+
 template <class T, size_t size>
 T Polygon<T, size>::area() const
 {
@@ -178,13 +188,4 @@ bool Polygon<T, size>::isInShape(const Coordinate<T>& p) const
   }
 
   return true;
-}
-
-template <class T, size_t size>
-void Polygon<T, size>::setVertex(const size_t index, const Cartesian<T>& coord)
-{
-  delete m_verticies[index];
-
-  // really forcing this interface
-  m_verticies[index] = new Cartesian<T>(coord);
 }
