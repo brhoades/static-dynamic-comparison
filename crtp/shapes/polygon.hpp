@@ -3,7 +3,7 @@
  * CS5201
  * CRTP Lecture Example
  * 
- * Regular Polygon (non-crtp).
+ * Regular Polygon (crtp).
  */
 
 template <class T,template <class T> class System>
@@ -132,48 +132,4 @@ template <class T,template <class T> class System>
 T Polygon<T,System>::perimeter() const
 {
   return sideLength()*m_vertices.size();
-}
-
-template <class T,template <class T> class System>
-bool Polygon<T,System>::isInShape(const Coordinate<T,System>& p) const
-{
-  const Coordinate<T,System>* right = m_vertices[0];
-  const Coordinate<T,System>* left = m_vertices[1];
-
-  // A freeform shape won't have this... TODO
-  T side, right_distance, left_distance, rsquared, lsquared, ssquared = side*side;
-
-  // Create triangles with every pair of coordinates near each other and the
-  // passed point.
-  for(auto i=0u; i<m_vertices.size(); i++)
-  {
-    left = m_vertices[i];
-
-    if(i < m_vertices.size()- 1)
-      right = m_vertices[i+1];
-    else // wrap around back to first.
-      right = m_vertices[0];
-
-    side = left->distance(*right);
-    ssquared = side*side;
-    right_distance = right->distance(p);
-    left_distance = left->distance(p);
-    rsquared = right_distance * right_distance;
-    lsquared = left_distance * left_distance;
-
-    T sum = 0;
-
-    // law of cosines
-    sum += acos((rsquared + lsquared - ssquared)/(2*right_distance*left_distance));
-    sum += acos((ssquared + lsquared -rsquared)/(2*side*left_distance));
-    sum += acos((ssquared + rsquared - lsquared)/(2*side*right_distance));
-
-    // If the sum of these angles is PI, it's inside (continue). If zero, false.
-    if(sum == 0)
-      return false;
-  }
-
-  return true;
-
-  return true;
 }

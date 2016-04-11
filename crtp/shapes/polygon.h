@@ -3,7 +3,7 @@
  * CS5201
  * CRTP Lecture Example
  * 
- * Regular Polygon (non-crtp).
+ * Regular Polygon (crtp).
  */
 #pragma once
 
@@ -48,9 +48,6 @@ class Polygon: public Shape<T,System,Polygon>
     // Get coordinates for corners (noncircle).
     Coordinate<T,System>** getPoints();
     Cartesian<T> center() const;
-
-    // Bounding functions
-    bool isInShape(const Coordinate<T,System>&) const;
   private:
     vector<Coordinate<T,System>*> m_vertices;
 };

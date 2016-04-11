@@ -15,7 +15,7 @@ template <class T>
 ostream& operator<<(ostream&, const Shape<T>&);
 
 template <class T>
-class Polygon: Shape<T>
+class Polygon: public Shape<T>
 {
   public:
     Polygon();
@@ -45,9 +45,6 @@ class Polygon: Shape<T>
     // Get coordinates for corners (noncircle).
     virtual Coordinate<T>** getPoints();
     virtual Cartesian<T> center() const;
-
-    // Bounding functions
-    virtual bool isInShape(const Coordinate<T>&) const;
   private:
     vector<Coordinate<T>*> m_vertices;
 };

@@ -75,8 +75,7 @@ class Shape
     }
 
     // Bounding checks
-    bool isInShape(const Coordinate<T,System>& p) const
-    {
-      return static_cast<const Derived<T, System>*>(this)->isInShape(p);
-    }
+    bool isInShape(const Coordinate<T,System>& p) const;
 };
+
+#include "shape.hpp"

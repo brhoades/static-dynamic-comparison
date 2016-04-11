@@ -41,5 +41,7 @@ class Shape
     virtual Cartesian<T> center() const                                    = 0;
 
     // Bounding checks
-    virtual bool isInShape(const Coordinate<T>&) const                     = 0;
+    virtual bool isInShape(const Coordinate<T>&) const;
 };
+
+#include "shape.hpp"
