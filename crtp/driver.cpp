@@ -33,7 +33,16 @@ int main(int argc, char** argv)
 
   CoordReader<double,Cartesian> reader;
 
-  vector<Cartesian<double>> verticies = reader(argv[1]);
+  vector<Cartesian<double>> vertices = reader(argv[1]);
   vector<Cartesian<double>> testers = reader(argv[2]);
+
+  Polygon<double,3,Cartesian> shape;
+
+  for(auto i=0u; i<vertices.size(); i++)
+    shape.setVertex(i, vertices[0]);
+
+  for(auto i=0u; i<testers.size(); i++)
+    shape.isInShape(testers[i]);
+
   return 0;
 }

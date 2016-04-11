@@ -14,7 +14,7 @@ vector<System<T>> CoordReader<T, System>::operator()(const char* fname) const
   vector<System<T>> ret;
   fstream fs(fname);
 
-  if(!fs.bad())
+  if(fs.bad())
   {
     cout << "Failed to read " << fname << "." << endl;
     exit(1);
