@@ -18,9 +18,9 @@ class Shape
     Shape()                                                          = default;
     virtual ~Shape()                                                 = default;
 
-    // Accesss member points
+    // Access member points
     virtual Coordinate<T>& operator[](const size_t index)                  = 0;
-    virtual Coordinate<T> operator[](const size_t index) const             = 0;
+    virtual const Coordinate<T>& operator[](const size_t index) const      = 0;
 
     // Shape comparison
     virtual bool operator==(const Shape<T>&) const                         = 0;
@@ -37,9 +37,9 @@ class Shape
     virtual T perimeter() const                                            = 0;
 
     // Get coordinates for corners (noncircle), center (circle).
-    virtual Coordinate<T>* getPoints()                                     = 0;
+    virtual Coordinate<T>** getPoints()                                    = 0;
     virtual Cartesian<T> center() const                                    = 0;
 
-    // Transform points
-    //Shape& transform(~lambda~);
+    // Bounding checks
+    virtual bool isInShape(const Coordinate<T>&) const                     = 0;
 };

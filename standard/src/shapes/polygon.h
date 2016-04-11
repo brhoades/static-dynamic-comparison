@@ -20,11 +20,11 @@ class Polygon: Shape<T>
   public:
     Polygon();
     Polygon(const Polygon<T, size>& other);
-    virtual ~Polygon()                                               = default;
+    virtual ~Polygon();
 
     // Accesss member points
     virtual Coordinate<T>& operator[](const size_t index);
-    virtual Coordinate<T> operator[](const size_t index) const;
+    virtual const Coordinate<T>& operator[](const size_t index) const;
 
     // Polygon comparison
     virtual bool operator==(const Shape<T>&) const;
@@ -35,17 +35,21 @@ class Polygon: Shape<T>
     virtual T operator-(const Shape<T>&) const;
 
     virtual size_t numSides() const;
+
+    void setVertex(const size_t, const Cartesian<T>&);
     
     virtual T area() const;
     virtual T sideLength() const;
     virtual T perimeter() const;
 
     // Get coordinates for corners (noncircle).
-    virtual Coordinate<T>* getPoints();
+    virtual Coordinate<T>** getPoints();
     virtual Cartesian<T> center() const;
 
+    // Bounding functions
+    virtual bool isInShape(const Coordinate<T>&) const;
   private:
-    array<Coordinate<T>, size> m_data;
+    array<Coordinate<T>*, size> m_verticies;
 };
 
 #include "polygon.hpp"
