@@ -21,7 +21,7 @@
 .PHONY: all clean
 
 CXX = /usr/bin/g++
-CXXFLAGS = -std=c++11 -O3 -Wall -W -pedantic-errors -g
+CXXFLAGS = -std=c++11 -Wall -W -pedantic-errors -O3
 
 # The following 2 lines only work with gnu make.
 # It's much nicer than having to list them out,

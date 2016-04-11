@@ -31,15 +31,19 @@ int main(int argc, char** argv)
     return 0;
   }
 
+  cout << "Reading files: ";
   CoordReader<double,Cartesian> reader;
 
   vector<Cartesian<double>> vertices = reader(argv[1]);
   vector<Cartesian<double>> testers = reader(argv[2]);
+  cout << "done" << endl;
 
   Polygon<double,Cartesian> shape;
 
+  cout << "Adding vertices: ";
   for(auto& p: vertices)
     shape.addVertex(p);
+  cout << "done" << endl;
 
   for(auto& p: testers)
     shape.isInShape(p);

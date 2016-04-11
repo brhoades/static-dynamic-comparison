@@ -82,7 +82,6 @@ size_t Polygon<T,System>::numSides() const
   return m_vertices.size();
 }
 
-
 template <class T,template <class T> class System>
 void Polygon<T,System>::addVertex(const Cartesian<T>& coord)
 {
@@ -142,7 +141,7 @@ bool Polygon<T,System>::isInShape(const Coordinate<T,System>& p) const
   const Coordinate<T,System>* left = m_vertices[1];
 
   // A freeform shape won't have this... TODO
-  T side = sideLength() / 2;
+  T side, right_distance, left_distance, rsquared, lsquared, ssquared = side*side;
 
   // Create triangles with every pair of coordinates near each other and the
   // passed point.
@@ -155,29 +154,26 @@ bool Polygon<T,System>::isInShape(const Coordinate<T,System>& p) const
     else // wrap around back to first.
       right = m_vertices[0];
 
-    T right_distance = right->distance(p), left_distance = left->distance(p);
+    side = left->distance(*right);
+    ssquared = side*side;
+    right_distance = right->distance(p);
+    left_distance = left->distance(p);
+    rsquared = right_distance * right_distance;
+    lsquared = left_distance * left_distance;
 
     T sum = 0;
 
     // law of cosines
-    sum += acos((right_distance*right_distance + left_distance*left_distance - side*side)
-                /(2*right_distance*left_distance));
-    sum += acos((side*side + left_distance*left_distance - right_distance*right_distance)
-                /(2*side*left_distance));
-    sum += acos((side*side + right_distance*right_distance - left_distance*left_distance)
-                /(2*side*right_distance));
+    sum += acos((rsquared + lsquared - ssquared)/(2*right_distance*left_distance));
+    sum += acos((ssquared + lsquared -rsquared)/(2*side*left_distance));
+    sum += acos((ssquared + rsquared - lsquared)/(2*side*right_distance));
 
     // If the sum of these angles is PI, it's inside (continue). If zero, false.
     if(sum == 0)
       return false;
-    else if(isnan(sum))
-      return false;
-    else if(abs(sum - M_PI) > 0.0000001)
-    {
-      cerr << sum << endl;
-      throw domain_error("When determining side of point on a shape, the result wasn't 0 or PI.");
-    }
   }
+
+  return true;
 
   return true;
 }
