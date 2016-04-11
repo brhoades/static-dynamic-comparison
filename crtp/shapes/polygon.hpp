@@ -6,162 +6,159 @@
  * Regular Polygon (non-crtp).
  */
 
-template <class T,size_t size,template <class T> class System>
-Polygon<T,size,System>::Polygon()
+template <class T,template <class T> class System>
+Polygon<T,System>::Polygon()
 {
-  if(size <= 1)
+  if(m_vertices.size()<= 1)
     throw domain_error("A regular polygon needs at least 3 sides.");
-
-  for(auto*& p: m_verticies)
-    p = nullptr;
 }
 
-template <class T,size_t size,template <class T> class System>
-Polygon<T,size,System>::Polygon(const Polygon<T,size,System>& other): Polygon()
+template <class T,template <class T> class System>
+Polygon<T,System>::Polygon(const Polygon<T,System>& other): Polygon()
 {
-  for(auto i=0u; i<size; i++)
-    m_verticies[i] = new Coordinate<T,System>(other[i]);
+  for(auto& p: other.m_vertices)
+    m_vertices.push_back(new Coordinate<T,System>(p));
 }
 
-template <class T,size_t size,template <class T> class System>
-Polygon<T,size,System>::~Polygon()
+template <class T,template <class T> class System>
+Polygon<T,System>::~Polygon()
 {
-  for(auto i=0u; i<size; i++)
-    delete m_verticies[i];
+  for(auto& p: m_vertices)
+    delete p;
 }
 
 // Accesss member points
-template <class T,size_t size,template <class T> class System>
-Coordinate<T,System>& Polygon<T,size,System>::operator[](const size_t index)
+template <class T,template <class T> class System>
+Coordinate<T,System>& Polygon<T,System>::operator[](const size_t index)
 {
-  if(m_verticies.size() <= index)
+  if(m_vertices.size() <= index)
     throw out_of_range("Provided index is out of bounds for this shape.");
 
-  return *m_verticies[index];
+  return *m_vertices[index];
 }
-template <class T,size_t size,template <class T> class System>
-const Coordinate<T,System>& Polygon<T,size,System>::operator[](const size_t index) const
+template <class T,template <class T> class System>
+const Coordinate<T,System>& Polygon<T,System>::operator[](const size_t index) const
 {
-  if(m_verticies.size() <= index)
+  if(m_vertices.size() <= index)
     throw out_of_range("Provided index is out of bounds for this shape.");
 
-  return *m_verticies[index];
+  return *m_vertices[index];
 }
 
 // Polygon comparison
-template <class T,size_t size,template <class T> class System>
-bool Polygon<T,size,System>::operator==(const Shape<T,System>& rhs) const
+template <class T,template <class T> class System>
+bool Polygon<T,System>::operator==(const Shape<T,System>& rhs) const
 {
   if(rhs.numSides() != numSides())
     return false;
 
   for(auto i=0u; i<numSides(); i++)
   {
-    if(rhs[i] != *m_verticies[i])
+    if(rhs[i] != *m_vertices[i])
       return false;
   }
 
   return true;
 }
-template <class T,size_t size,template <class T> class System>
-bool Polygon<T,size,System>::operator!=(const Shape<T,System>& rhs) const
+template <class T,template <class T> class System>
+bool Polygon<T,System>::operator!=(const Shape<T,System>& rhs) const
 {
   return !operator==(rhs);
 }
 
 // Area differences between shapes.
-template <class T,size_t size,template <class T> class System>
-T Polygon<T,size,System>::operator+(const Shape<T,System>& rhs) const
+template <class T,template <class T> class System>
+T Polygon<T,System>::operator+(const Shape<T,System>& rhs) const
 {
   return area() + rhs.area();
 }
-template <class T,size_t size,template <class T> class System>
-T Polygon<T,size,System>::operator-(const Shape<T,System>& rhs) const
+template <class T,template <class T> class System>
+T Polygon<T,System>::operator-(const Shape<T,System>& rhs) const
 {
   return area() - rhs.area();
 }
 
-template <class T,size_t size,template <class T> class System>
-size_t Polygon<T,size,System>::numSides() const
+template <class T,template <class T> class System>
+size_t Polygon<T,System>::numSides() const
 {
-  return size;
+  return m_vertices.size();
 }
 
 
-template <class T,size_t size,template <class T> class System>
-void Polygon<T,size,System>::setVertex(const size_t index, const Cartesian<T>& coord)
+template <class T,template <class T> class System>
+void Polygon<T,System>::setVertex(const size_t index, const Cartesian<T>& coord)
 {
-  delete m_verticies[index];
+  delete m_vertices[index];
 
   // really forcing this interface
-  m_verticies[index] = new Cartesian<T>(coord);
+  m_vertices[index] = new Cartesian<T>(coord);
 }
 
-template <class T,size_t size,template <class T> class System>
-T Polygon<T,size,System>::area() const
+template <class T,template <class T> class System>
+T Polygon<T,System>::area() const
 {
   // abuse our interface here for maximum slow.
 
   // get average of any two points (first two will do)
-  Cartesian<T> midpoint = *m_verticies[0];
-  midpoint += *m_verticies[1] /= 2;
+  Cartesian<T> midpoint = *m_vertices[0];
+  midpoint += *m_vertices[1] /= 2;
 
   // 1/2 apothom * perimeter
   return((1/2.f) * this->center().distance(midpoint)*perimeter());
 }
 
-template <class T,size_t size,template <class T> class System>
-T Polygon<T,size,System>::sideLength() const
+template <class T,template <class T> class System>
+T Polygon<T,System>::sideLength() const
 {
   // grab first two points and return the distance
-  return m_verticies[0]->distance((*this)[1]);
+  return m_vertices[0]->distance((*this)[1]);
 }
 
 // Get coordinates for corners (noncircle).
-template <class T,size_t size,template <class T> class System>
-Coordinate<T,System>** Polygon<T,size,System>::getPoints()
+template <class T,template <class T> class System>
+Coordinate<T,System>** Polygon<T,System>::getPoints()
 {
-  return m_verticies.data();
+  return m_vertices.data();
 }
 
-template <class T,size_t size,template <class T> class System>
-Cartesian<T> Polygon<T,size,System>::center() const
+template <class T,template <class T> class System>
+Cartesian<T> Polygon<T,System>::center() const
 {
   // get our first point
   Cartesian<T> sum;
 
-  for(auto i=0u; i<size; i++)
+  for(auto i=0u; i<m_vertices.size(); i++)
     sum += (*this)[i];
 
-  return sum /= size;
+  return sum /= m_vertices.size();
 }
 
-template <class T,size_t size,template <class T> class System>
-T Polygon<T,size,System>::perimeter() const
+template <class T,template <class T> class System>
+T Polygon<T,System>::perimeter() const
 {
-  return sideLength()*size;
+  return sideLength()*m_vertices.size();
 }
 
-template <class T,size_t size,template <class T> class System>
-bool Polygon<T,size,System>::isInShape(const Coordinate<T,System>& p) const
+template <class T,template <class T> class System>
+bool Polygon<T,System>::isInShape(const Coordinate<T,System>& p) const
 {
   auto p_xy = p.asCartesian();
-  const Coordinate<T,System>* right = m_verticies[0];
-  const Coordinate<T,System>* left = m_verticies[1];
+  const Coordinate<T,System>* right = m_vertices[0];
+  const Coordinate<T,System>* left = m_vertices[1];
 
   // A freeform shape won't have this... TODO
   T side = sideLength() / 2;
 
   // Create triangles with every pair of coordinates near each other and the
   // passed point.
-  for(auto i=0u; i<size; i++)
+  for(auto i=0u; i<m_vertices.size(); i++)
   {
-    left = m_verticies[i];
+    left = m_vertices[i];
 
-    if(i < size - 1)
-      right = m_verticies[i+1];
+    if(i < m_vertices.size()- 1)
+      right = m_vertices[i+1];
     else // wrap around back to first.
-      right = m_verticies[0];
+      right = m_vertices[0];
 
     T right_distance = p.distance(*right), left_distance = p.distance(*left);
 

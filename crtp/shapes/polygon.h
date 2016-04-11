@@ -7,19 +7,19 @@
  */
 #pragma once
 
-#include <array>
+#include <vector>
 
 #include "../interfaces/shape.h"
 
-template <class T,size_t size, template <class T> class System>
+template <class T, template <class T> class System>
 ostream& operator<<(ostream&, const Shape<T,System>&);
 
-template <class T,size_t size, template <class T> class System>
+template <class T, template <class T> class System>
 class Polygon: Shape<T,System>
 {
   public:
     Polygon();
-    Polygon(const Polygon<T,size, System>& other);
+    Polygon(const Polygon<T,System>& other);
     virtual ~Polygon();
 
     // Accesss member points
@@ -49,7 +49,7 @@ class Polygon: Shape<T,System>
     // Bounding functions
     virtual bool isInShape(const Coordinate<T,System>&) const;
   private:
-    array<Coordinate<T,System>*, size> m_verticies;
+    vector<Coordinate<T,System>*> m_vertices;
 };
 
 #include "polygon.hpp"

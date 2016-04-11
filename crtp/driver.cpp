@@ -36,7 +36,7 @@ int main(int argc, char** argv)
   vector<Cartesian<double>> vertices = reader(argv[1]);
   vector<Cartesian<double>> testers = reader(argv[2]);
 
-  Polygon<double,3,Cartesian> shape;
+  Polygon<double,Cartesian> shape;
 
   for(auto i=0u; i<vertices.size(); i++)
     shape.setVertex(i, vertices[0]);
