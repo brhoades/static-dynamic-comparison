@@ -1,34 +1,18 @@
 template <class T>
 bool Shape<T>::isInShape(const Coordinate<T>& p) const
 {
-  // A freeform shape won't have this... TODO
-  T side, right_distance, left_distance, rsquared, lsquared, ssquared;
+  const auto p_xy = p.asCartesian();
+  bool ret = false;
 
-  // Create triangles with every pair of coordinates near each other and the
-  // passed point.
-  for(auto i=0u; i<numSides(); i++)
+  for(int i=0, j=static_cast<long>(numSides())-1; i<numSides(); j=i++)
   {
-    const Coordinate<T>& right = (*this)[(i+1)%numSides()];
-    const Coordinate<T>& left = (*this)[i];
+    const auto& verti = (*this)[i];
+    const auto& vertj = (*this)[j];
 
-    side = left.distance(right);
-    ssquared = side*side;
-    right_distance = right.distance(p);
-    left_distance = left.distance(p);
-    rsquared = right_distance * right_distance;
-    lsquared = left_distance * left_distance;
-
-    T sum = 1;
-
-    // law of cosines
-    sum += acos((rsquared + lsquared - ssquared)/(2*right_distance*left_distance));
-    sum += acos((ssquared + lsquared -rsquared)/(2*side*left_distance));
-    sum += acos((ssquared + rsquared - lsquared)/(2*side*right_distance));
-
-    // If the sum of these angles is PI, it's inside (continue). If zero, false.
-    if(sum == 0)
-      return false;
+    if((verti.y()>p_xy.y()) != (vertj.y()>p_xy.y()) && 
+       (p_xy.x() < (vertj.x() - verti.x()) * (p_xy.y()-verti.y()) / (vertj.y()-verti.y()) + verti.x()))
+      ret = !ret;
   }
 
-  return true;
+  return ret;
 }

@@ -54,6 +54,9 @@ class Polar: public Coordinate<T>
     virtual T& theta() {return m_theta;}
     virtual T theta() const {return m_theta;}
 
+    virtual T x() const;
+    virtual T y() const;
+
   protected:
     T m_r, m_theta;
 };

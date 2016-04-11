@@ -58,6 +58,8 @@ class Coordinate
 
     // Transform points
     //Coordinate& transform(~lambda~);
+    virtual T x() const                                                    = 0;
+    virtual T y() const                                                    = 0;
 };
 
 #include "coordinate.hpp"

@@ -133,6 +133,18 @@ Polar<T>::operator Cartesian<T>() const
   return this->asCartesian();
 }
 
+template <class T>
+T Polar<T>::x() const
+{
+  return m_r*cos(m_theta);
+}
+
+template <class T>
+T Polar<T>::y() const
+{
+  return m_r*sin(m_theta);
+}
+
 /* Global Functions */
 template <class T>
 ostream& operator<<(ostream& os, const Polar<T>& rhs)

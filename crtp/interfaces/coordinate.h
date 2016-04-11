@@ -92,6 +92,16 @@ class Coordinate
     {
       return static_cast<Derived<T>*>(this)->fromCartesian(other);
     }
+
+    T x() const
+    {
+      return static_cast<const Derived<T>*>(this)->x();
+    }
+
+    T y() const
+    {
+      return static_cast<const Derived<T>*>(this)->y();
+    }
 };
 
 #include "coordinate.hpp"
