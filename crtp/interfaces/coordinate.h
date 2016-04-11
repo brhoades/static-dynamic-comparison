@@ -80,7 +80,7 @@ class Coordinate
     // Convert to cartesian
     operator Cartesian<T>() const
     {
-      return static_cast<const Cartesian<T>*>(this);
+      return static_cast<const Cartesian<T>>(*static_cast<const Derived<T>*>(this));
     }
 
     // As cartesian
