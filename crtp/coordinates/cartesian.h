@@ -21,6 +21,7 @@ template <class T>
 ostream& operator<<(ostream&, const Cartesian<T>&);
 
 #include "../interfaces/coordinate.h"
+#include "../interfaces/coordinate.h"
 
 template <class T>
 class Cartesian: public Coordinate<T, Cartesian>

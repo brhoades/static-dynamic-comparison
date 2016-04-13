@@ -26,9 +26,9 @@ Cartesian<T>::Cartesian(const Cartesian<T>& other): Cartesian(other.m_x,
 }
 
 template <class T>
-Coordinate<T, Cartesian>& Cartesian<T>::operator=(const Coordinate<T, Cartesian>&)
+Coordinate<T, Cartesian>& Cartesian<T>::operator=(const Coordinate<T, Cartesian>& rhs)
 {
-  //this->fromCartesian(rhs.asCartesian());
+  this->fromCartesian(rhs.asCartesian());
 
   return *this;
 }
