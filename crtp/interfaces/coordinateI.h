@@ -47,7 +47,6 @@ class CoordinateI
     virtual operator Cartesian<T>() const = 0;
 
     // As cartesian
-    virtual Cartesian<T> asCartesian() const = 0;
     virtual void fromCartesian(const Cartesian<T>& other) = 0;
 
     virtual T x() const = 0;

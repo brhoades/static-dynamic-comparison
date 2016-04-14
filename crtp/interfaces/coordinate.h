@@ -86,11 +86,6 @@ class Coordinate: public CoordinateI<T>
       return static_cast<const Cartesian<T>>(*static_cast<const Derived<T>*>(this));
     }
 
-    // As cartesian
-    virtual Cartesian<T> asCartesian() const
-    {
-      return static_cast<const Derived<T>*>(this)->asCartesian();
-    }
     virtual void fromCartesian(const Cartesian<T>& other)
     {
       return static_cast<Derived<T>*>(this)->fromCartesian(other);

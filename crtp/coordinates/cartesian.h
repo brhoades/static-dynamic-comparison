@@ -53,8 +53,7 @@ class Cartesian: public Coordinate<T, Cartesian>
 
     operator Cartesian<T>() const;
 
-    // As cartesian
-    Cartesian<T> asCartesian() const;
+    // From a cartesian point
     void fromCartesian(const Cartesian<T>&);
 
     T& x() {return m_x;}

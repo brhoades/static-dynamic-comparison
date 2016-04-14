@@ -45,7 +45,6 @@ class Polar: public Coordinate<T, Polar>
     T distance(const Coordinate<T, Polar>&) const;
 
     operator Cartesian<T>() const;
-    Cartesian<T> asCartesian() const;
     void fromCartesian(const Cartesian<T>&);
 
     T& r() {return m_r;}
