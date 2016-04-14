@@ -8,8 +8,8 @@ bool Shape<T, System, Derived>::isInShape(const CoordinateI<T>& p) const
   for(int i=0, j=static_cast<long>(numSides())-1; i<numSides(); j=i++)
   {
     // being an interface, they should be castable to cartesian (a nonvirt base).
-    const Cartesian<T>& verti = static_cast<const Cartesian<T>&>(*(*this)[i]);
-    const Cartesian<T>& vertj = static_cast<const Cartesian<T>&>(*(*this)[j]);
+    const Cartesian<T>& verti = static_cast<const Cartesian<T>&>(*operator[](i));
+    const Cartesian<T>& vertj = static_cast<const Cartesian<T>&>(*operator[](j));
 
 
     if((verti.y()>p_xy.y()) != (vertj.y()>p_xy.y()) && 
