@@ -17,11 +17,11 @@ class Shape
 {
   public:
     // Access member points
-    CoordinateI<T>* operator[](const size_t index)
+    System<T>* operator[](const size_t index)
     {
       return static_cast<Derived<T, System>*>(this)->operator[](index);
     }
-    const CoordinateI<T>* operator[](const size_t index) const
+    const System<T>* operator[](const size_t index) const
     {
       return static_cast<const Derived<T, System>*>(this)->operator[](index);
     }
@@ -65,17 +65,17 @@ class Shape
     }
 
     // Get coordinates for corners (noncircle), center (circle).
-    Coordinate<T,System>** getPoints()
+    System<T>** getPoints()
     {
       return static_cast<Derived<T, System>*>(this)->getPoints();
     }
-    Cartesian<T> center() const
+    System<T>* center() const
     {
       return static_cast<const Derived<T, System>*>(this)->center();
     }
 
     // Bounding checks
-    bool isInShape(const CoordinateI<T>& p) const;
+    bool isInShape(const System<T>& p) const;
 };
 
 #include "shape.hpp"

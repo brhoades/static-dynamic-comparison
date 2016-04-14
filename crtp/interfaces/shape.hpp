@@ -1,6 +1,6 @@
 template <class T, template <class T> class System, // T, System<T>
           template <class T, template <class T> class System> class Derived> // Shape<T, Cartesian<T>>
-bool Shape<T, System, Derived>::isInShape(const CoordinateI<T>& p) const
+bool Shape<T, System, Derived>::isInShape(const System<T>& p) const
 {
   const auto p_xy = p.asCartesian();
   bool ret = false;

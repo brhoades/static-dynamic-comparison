@@ -114,7 +114,7 @@ def graph(types):
     sideslist = []
     drivers = [os.path.join(type, "driver") for type in types]
 
-    for sides in range(3, 50000, 1000):
+    for sides in range(3, 15000, 1000):
         sideslist.append(sides)
         vfile, tfile = create_ngon_files(sides)
 

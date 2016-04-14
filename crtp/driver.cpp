@@ -38,7 +38,9 @@ int main(int argc, char** argv)
   vector<Cartesian<double>> testers = reader(argv[2]);
   cout << "done" << endl;
 
-  Polygon<double,Cartesian> shape;
+  // This is significantly faster, but not comparable to standard
+  // Polygon<double,Cartesian> shape;
+  Polygon<double,CoordinateI> shape;
 
   cout << "Adding vertices: ";
   for(auto& p: vertices)
