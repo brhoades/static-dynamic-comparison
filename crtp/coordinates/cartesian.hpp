@@ -26,7 +26,8 @@ Cartesian<T>::Cartesian(const Cartesian<T>& other): Cartesian(other.m_x,
 }
 
 template <class T>
-Coordinate<T, Cartesian>& Cartesian<T>::operator=(const Coordinate<T, Cartesian>& rhs)
+template <template <class> class System>
+Coordinate<T, Cartesian>& Cartesian<T>::operator=(const Coordinate<T, System>& rhs)
 {
   const auto& rhs_xy = static_cast<const Cartesian<T>&>(rhs);
   fromCartesian(rhs_xy);
@@ -36,7 +37,8 @@ Coordinate<T, Cartesian>& Cartesian<T>::operator=(const Coordinate<T, Cartesian>
 
 // Arithmetic
 template <class T>
-Coordinate<T, Cartesian>& Cartesian<T>::operator+=(const Coordinate<T, Cartesian>& rhs)
+template <template <class> class System>
+Coordinate<T, Cartesian>& Cartesian<T>::operator+=(const Coordinate<T, System>& rhs)
 {
   const auto& rhs_xy = static_cast<const Cartesian<T>&>(rhs);
 
@@ -47,7 +49,8 @@ Coordinate<T, Cartesian>& Cartesian<T>::operator+=(const Coordinate<T, Cartesian
 }
 
 template <class T>
-Coordinate<T, Cartesian>& Cartesian<T>::operator-=(const Coordinate<T, Cartesian>& rhs)
+template <template <class> class System>
+Coordinate<T, Cartesian>& Cartesian<T>::operator-=(const Coordinate<T, System>& rhs)
 {
   const auto& rhs_xy = static_cast<const Cartesian<T>&>(rhs);
 
@@ -77,13 +80,15 @@ Coordinate<T, Cartesian>& Cartesian<T>::operator*=(const T& rhs)
 }
 
 template <class T>
-bool Cartesian<T>::operator==(const Coordinate<T, Cartesian>& other) const
+template <template <class> class System>
+bool Cartesian<T>::operator==(const Coordinate<T, System>& other) const
 {
   return distance(other) == 0;
 }
 
 template <class T>
-bool Cartesian<T>::operator!=(const Coordinate<T, Cartesian>& other) const
+template <template <class> class System>
+bool Cartesian<T>::operator!=(const Coordinate<T, System>& other) const
 {
   return !operator==(other);
 }
@@ -113,7 +118,8 @@ T Cartesian<T>::operator[](const size_t index) const
 }
 
 template <class T>
-T Cartesian<T>::distance(const Coordinate<T, Cartesian>& other) const
+template <template <class> class System>
+T Cartesian<T>::distance(const Coordinate<T, System>& other) const
 {
   const Cartesian<T>& other_cartesian = static_cast<const Cartesian<T>&>(other);
   T x = m_x - other_cartesian.m_x, y = m_y - other_cartesian.m_y;

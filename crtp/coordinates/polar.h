@@ -25,19 +25,24 @@ class Polar: public Coordinate<T, Polar>
     Polar(const T& r, const T& theta);
     ~Polar()                                                 = default;
 
-    Coordinate<T, Polar>& operator=(const Coordinate<T, Polar>&);
+    template <template <class> class System>
+    Coordinate<T, Polar>& operator=(const Coordinate<T, System>&);
 
     // Arithmetic
-    Coordinate<T, Polar>& operator+=(const Coordinate<T, Polar>&);
-    Coordinate<T, Polar>& operator-=(const Coordinate<T, Polar>&);
+    template <template <class> class System>
+    Coordinate<T, Polar>& operator+=(const Coordinate<T, System>&);
+    template <template <class> class System>
+    Coordinate<T, Polar>& operator-=(const Coordinate<T, System>&);
 
     // Transformation
     Coordinate<T, Polar>& operator/=(const T&);
 
     Coordinate<T, Polar>& operator*=(const T&);
 
-    bool operator==(const Coordinate<T, Polar>&) const;
-    bool operator!=(const Coordinate<T, Polar>&) const;
+    template <template <class> class System>
+    bool operator==(const Coordinate<T, System>&) const;
+    template <template <class> class System>
+    bool operator!=(const Coordinate<T, System>&) const;
 
     T& operator[](const size_t index);
     T operator[](const size_t index) const;

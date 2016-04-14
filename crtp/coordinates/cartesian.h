@@ -32,24 +32,29 @@ class Cartesian: public Coordinate<T, Cartesian>
     Cartesian(const Cartesian<T>& other);
     ~Cartesian()                                                     = default;
 
-    Coordinate<T, Cartesian>& operator=(const Coordinate<T, Cartesian>&);
+    template <template <class> class System>
+    Coordinate<T, Cartesian>& operator=(const Coordinate<T, System>&);
 
     // Arithmetic
-    Coordinate<T, Cartesian>& operator+=(const Coordinate<T, Cartesian>&);
-    Coordinate<T, Cartesian>& operator-=(const Coordinate<T, Cartesian>&);
+    template <template <class> class System>
+    Coordinate<T, Cartesian>& operator+=(const Coordinate<T, System>&);
+    template <template <class> class System>
+    Coordinate<T, Cartesian>& operator-=(const Coordinate<T, System>&);
 
     // Transformation
     Coordinate<T, Cartesian>& operator/=(const T&);
-
     Coordinate<T, Cartesian>& operator*=(const T&);
-
-    bool operator==(const Coordinate<T, Cartesian>&) const;
-    bool operator!=(const Coordinate<T, Cartesian>&) const;
+    
+    template <template <class> class System>
+    bool operator==(const Coordinate<T, System>&) const;
+    template <template <class> class System>
+    bool operator!=(const Coordinate<T, System>&) const;
 
     T& operator[](const size_t index);
     T operator[](const size_t index) const;
 
-    T distance(const Coordinate<T, Cartesian>&) const;
+    template <template <class> class System>
+    T distance(const Coordinate<T, System>&) const;
 
     operator Cartesian<T>() const;
 

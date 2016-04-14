@@ -20,7 +20,8 @@ Polar<T>::Polar(const T& r, const T& theta): m_r(r), m_theta(theta)
 }
 
 template <class T>
-Coordinate<T, Polar>& Polar<T>::operator=(const Coordinate<T, Polar>& rhs)
+template <template <class> class System>
+Coordinate<T, Polar>& Polar<T>::operator=(const Coordinate<T, System>& rhs)
 {
   fromCartesian(static_cast<const Cartesian<T>&>(rhs));
 
@@ -29,7 +30,8 @@ Coordinate<T, Polar>& Polar<T>::operator=(const Coordinate<T, Polar>& rhs)
 
 // Arithmetic
 template <class T>
-Coordinate<T, Polar>& Polar<T>::operator+=(const Coordinate<T, Polar>& rhs)
+template <template <class> class System>
+Coordinate<T, Polar>& Polar<T>::operator+=(const Coordinate<T, System>& rhs)
 {
   fromCartesian(static_cast<Cartesian<T>&>(this) += rhs);
 
@@ -37,7 +39,8 @@ Coordinate<T, Polar>& Polar<T>::operator+=(const Coordinate<T, Polar>& rhs)
 }
 
 template <class T>
-Coordinate<T, Polar>& Polar<T>::operator-=(const Coordinate<T, Polar>& rhs)
+template <template <class> class System>
+Coordinate<T, Polar>& Polar<T>::operator-=(const Coordinate<T, System>& rhs)
 {
   fromCartesian(static_cast<Cartesian<T>&>(this) -= rhs);
 
@@ -62,13 +65,15 @@ Coordinate<T, Polar>& Polar<T>::operator*=(const T& rhs)
 }
 
 template <class T>
-bool Polar<T>::operator==(const Coordinate<T, Polar>& other) const
+template <template <class> class System>
+bool Polar<T>::operator==(const Coordinate<T, System>& other) const
 {
   return distance(other) == 0;
 }
 
 template <class T>
-bool Polar<T>::operator!=(const Coordinate<T, Polar>& other) const
+template <template <class> class System>
+bool Polar<T>::operator!=(const Coordinate<T, System>& other) const
 {
   return !operator==(other);
 }

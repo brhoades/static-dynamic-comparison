@@ -38,11 +38,13 @@ class Coordinate: public CoordinateI<T>
     // Arithmetic
     virtual CoordinateI<T>& operator+=(const CoordinateI<T>& rhs)
     {
-      return static_cast<Derived<T>*>(this)->operator+=(rhs);
+      // If we don't cast to Coordinate here, it tries to call our derived
+      // class's == on CoordinateI.
+      return static_cast<Coordinate<T,Derived>&>(*this) += rhs;
     }
     virtual CoordinateI<T>& operator-=(const CoordinateI<T>& rhs)
     {
-      return static_cast<Derived<T>*>(this)->operator-=(rhs);
+      return static_cast<Coordinate<T,Derived>&>(*this) -= rhs;
     }
 
     // Transformation
@@ -58,11 +60,11 @@ class Coordinate: public CoordinateI<T>
     // Coordinate comparison
     virtual bool operator==(const CoordinateI<T>& rhs) const
     {
-      return static_cast<const Derived<T>*>(this)->operator==(rhs);
+      return static_cast<const Coordinate<T, Derived>&>(*this) == rhs;
     }
     virtual bool operator!=(const CoordinateI<T>& rhs) const
     {
-      return static_cast<const Derived<T>*>(this)->operator!=(rhs);
+      return static_cast<const Coordinate<T, Derived>&>(*this) != rhs;
     }
 
     // Accesss member values
