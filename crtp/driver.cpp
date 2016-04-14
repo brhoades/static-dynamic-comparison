@@ -31,21 +31,19 @@ int main(int argc, char** argv)
     return 0;
   }
 
-  cout << "Reading files: ";
   CoordReader<double,Cartesian> reader;
 
   vector<Cartesian<double>> vertices = reader(argv[1]);
   vector<Cartesian<double>> testers = reader(argv[2]);
-  cout << "done" << endl;
+  cout << "CRTP: Processing a " << vertices.size()
+       << "-sided polygon with " << testers.size() << " test points." << endl;
 
   // This is significantly faster, but not comparable to standard
   // Polygon<double,Cartesian> shape;
   Polygon<double,CoordinateI> shape;
 
-  cout << "Adding vertices: ";
   for(auto& p: vertices)
     shape.addVertex(p);
-  cout << "done" << endl;
 
   for(auto& p: testers)
   {

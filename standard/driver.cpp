@@ -31,19 +31,17 @@ int main(int argc, char** argv)
     return 0;
   }
 
-  cout << "Reading files: ";
   CoordReader<double,Cartesian> reader;
 
   vector<Cartesian<double>> vertices = reader(argv[1]);
   vector<Cartesian<double>> testers = reader(argv[2]);
-  cout << "done" << endl;
+  cout << "Standard: Processing a " << vertices.size()
+       << "-sided polygon with " << testers.size() << " test points." << endl;
 
   Polygon<double> shape;
 
-  cout << "Adding vertices: ";
   for(auto& p: vertices)
     shape.addVertex(p);
-  cout << "done" << endl;
 
   for(auto& p: testers)
     shape.isInShape(p);
