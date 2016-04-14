@@ -3,7 +3,7 @@
  * CS5201
  * CRTP Lecture Example
  * 
- * Shape interface (non-crtp).
+ * Shape interface (crtp).
  *
  * Documentation for interface functions are within derived classes.
  */
@@ -11,17 +11,17 @@
 
 #include "coordinate.h"
 
-template <class T, template <class T> class System, // T, System<T>
-          template <class T, template <class T> class System> class Derived> // Shape<T, Cartesian<T>>
+template <class T, template <class> class System, // T, System<T>
+          template <class, template <class> class> class Derived> // Shape<T, Cartesian<T>>
 class Shape
 {
   public:
     // Access member points
-    Coordinate<T,System>& operator[](const size_t index)
+    CoordinateI<T>* operator[](const size_t index)
     {
       return static_cast<Derived<T, System>*>(this)->operator[](index);
     }
-    const Coordinate<T,System>& operator[](const size_t index) const
+    const CoordinateI<T>* operator[](const size_t index) const
     {
       return static_cast<const Derived<T, System>*>(this)->operator[](index);
     }
@@ -75,7 +75,7 @@ class Shape
     }
 
     // Bounding checks
-    bool isInShape(const Coordinate<T,System>& p) const;
+    bool isInShape(const CoordinateI<T>& p) const;
 };
 
 #include "shape.hpp"

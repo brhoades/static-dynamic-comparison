@@ -1,14 +1,15 @@
 template <class T, template <class T> class System, // T, System<T>
           template <class T, template <class T> class System> class Derived> // Shape<T, Cartesian<T>>
-bool Shape<T, System, Derived>::isInShape(const Coordinate<T, System>& p) const
+bool Shape<T, System, Derived>::isInShape(const CoordinateI<T>& p) const
 {
   const auto p_xy = p.asCartesian();
   bool ret = false;
 
   for(int i=0, j=static_cast<long>(numSides())-1; i<numSides(); j=i++)
   {
-    const auto& verti = (*this)[i];
-    const auto& vertj = (*this)[j];
+    // being an interface, they should be castable to cartesian (a nonvirt base).
+    const Cartesian<T>& verti = static_cast<const Cartesian<T>&>(*(*this)[i]);
+    const Cartesian<T>& vertj = static_cast<const Cartesian<T>&>(*(*this)[j]);
 
 
     if((verti.y()>p_xy.y()) != (vertj.y()>p_xy.y()) && 

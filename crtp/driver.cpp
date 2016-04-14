@@ -46,7 +46,13 @@ int main(int argc, char** argv)
   cout << "done" << endl;
 
   for(auto& p: testers)
-    shape.isInShape(p);
+  {
+    #ifdef OUTPUT
+      cout << p << ": " << shape.isInShape(p) << endl;
+    #else
+      shape.isInShape(p);
+    #endif
+  }
 
   return 0;
 }

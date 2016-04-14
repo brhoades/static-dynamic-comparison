@@ -26,8 +26,8 @@ class Polygon: public Shape<T,System,Polygon>
     ~Polygon();
 
     // Accesss member points
-    Coordinate<T,System>& operator[](const size_t index);
-    const Coordinate<T,System>& operator[](const size_t index) const;
+    CoordinateI<T>* operator[](const size_t index);
+    const CoordinateI<T>* operator[](const size_t index) const;
 
     // Polygon comparison
     bool operator==(const Shape<T,System,Polygon>&) const;
@@ -46,10 +46,10 @@ class Polygon: public Shape<T,System,Polygon>
     T perimeter() const;
 
     // Get coordinates for corners (noncircle).
-    Coordinate<T,System>** getPoints();
+    CoordinateI<T>** getPoints();
     Cartesian<T> center() const;
   private:
-    vector<Coordinate<T,System>*> m_vertices;
+    vector<CoordinateI<T>*> m_vertices;
 };
 
 #include "polygon.hpp"

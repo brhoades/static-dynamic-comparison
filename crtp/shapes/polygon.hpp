@@ -27,20 +27,20 @@ Polygon<T,System>::~Polygon()
 
 // Accesss member points
 template <class T,template <class T> class System>
-Coordinate<T,System>& Polygon<T,System>::operator[](const size_t index)
+CoordinateI<T>* Polygon<T,System>::operator[](const size_t index)
 {
   if(m_vertices.size() <= index)
     throw out_of_range("Provided index is out of bounds for this shape.");
 
-  return *m_vertices[index];
+  return m_vertices[index];
 }
 template <class T,template <class T> class System>
-const Coordinate<T,System>& Polygon<T,System>::operator[](const size_t index) const
+const CoordinateI<T>* Polygon<T,System>::operator[](const size_t index) const
 {
   if(m_vertices.size() <= index)
     throw out_of_range("Provided index is out of bounds for this shape.");
 
-  return *m_vertices[index];
+  return m_vertices[index];
 }
 
 // Polygon comparison
@@ -111,7 +111,7 @@ T Polygon<T,System>::sideLength() const
 
 // Get coordinates for corners (noncircle).
 template <class T,template <class T> class System>
-Coordinate<T,System>** Polygon<T,System>::getPoints()
+CoordinateI<T>** Polygon<T,System>::getPoints()
 {
   return m_vertices.data();
 }
