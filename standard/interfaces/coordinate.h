@@ -53,7 +53,6 @@ class Coordinate
     virtual operator Cartesian<T>() const                                  = 0;
 
     // As cartesian
-    virtual Cartesian<T> asCartesian() const                               = 0;
     virtual void fromCartesian(const Cartesian<T>&)                        = 0;
 
     // Transform points

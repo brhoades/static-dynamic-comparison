@@ -28,7 +28,7 @@ Cartesian<T>::Cartesian(const Cartesian<T>& other): Cartesian(other.m_x,
 template <class T>
 Coordinate<T>& Cartesian<T>::operator=(const Coordinate<T>& rhs)
 {
-  this->fromCartesian(rhs.asCartesian());
+  fromCartesian(static_cast<const Cartesian<T>&>(rhs));
 
   return *this;
 }
@@ -37,9 +37,9 @@ Coordinate<T>& Cartesian<T>::operator=(const Coordinate<T>& rhs)
 template <class T>
 Coordinate<T>& Cartesian<T>::operator+=(const Coordinate<T>& rhs)
 {
-  auto rhs_xy = rhs.asCartesian();
+  auto rhs_xy = static_cast<const Cartesian<T>&>(rhs);
 
-  for(auto i=0u; i<2u; i++)
+  for(auto i=0; i<2; i++)
     (*this)[i] += rhs_xy[i];
 
   return *this;
@@ -48,9 +48,9 @@ Coordinate<T>& Cartesian<T>::operator+=(const Coordinate<T>& rhs)
 template <class T>
 Coordinate<T>& Cartesian<T>::operator-=(const Coordinate<T>& rhs)
 {
-  auto rhs_xy = rhs.asCartesian();
+  auto rhs_xy = static_cast<const Cartesian<T>&>(rhs);
 
-  for(auto i=0u; i<2u; i++)
+  for(auto i=0; i<2; i++)
     (*this)[i] -= rhs_xy[i];
 
   return *this;
@@ -60,7 +60,7 @@ Coordinate<T>& Cartesian<T>::operator-=(const Coordinate<T>& rhs)
 template <class T>
 Coordinate<T>& Cartesian<T>::operator/=(const T& rhs)
 {
-  for(auto i=0u; i<2u; i++)
+  for(auto i=0; i<2; i++)
     (*this)[i] /= rhs;
 
   return *this;
@@ -69,7 +69,7 @@ Coordinate<T>& Cartesian<T>::operator/=(const T& rhs)
 template <class T>
 Coordinate<T>& Cartesian<T>::operator*=(const T& rhs)
 {
-  for(auto i=0u; i<2u; i++)
+  for(auto i=0; i<2; i++)
     (*this)[i] *= rhs;
 
   return *this;
@@ -122,12 +122,6 @@ T Cartesian<T>::distance(const Coordinate<T>& other) const
 
 template <class T>
 Cartesian<T>::operator Cartesian<T>() const
-{
-  return *this;
-}
-
-template <class T>
-Cartesian<T> Cartesian<T>::asCartesian() const
 {
   return *this;
 }
