@@ -12,6 +12,9 @@ from subprocess import call
 from shapely.geometry.polygon import Polygon
 from matplotlib import pyplot as plt
 
+# The number of tests we do per size (to average)
+NUMBER_OF_TEST_ITERATIONS = 5
+
 
 def build(folder):
     """
@@ -43,11 +46,11 @@ def create_ngon_files(n):
     p = Polygon(vertices)
     bounds = p.bounds
     ru = random.uniform
-    for i in range(n):
+    for i in range(n//3):
         # create a random point inside our bounds
         testpoints.append((ru(bounds[0], bounds[2]), ru(bounds[1], bounds[3])))
 
-    for i in range(n):
+    for i in range(n//3):
         # create a random point outside our bounds
         x = None
         y = None
@@ -114,16 +117,18 @@ def graph(types):
     sideslist = []
     drivers = [os.path.join(type, "driver") for type in types]
 
-    for sides in range(3, 15000, 1000):
+    for sides in range(3, 13000, 1000):
         sideslist.append(sides)
         vfile, tfile = create_ngon_files(sides)
 
-        di = 0
-        for driver in drivers:
-            start = datetime.datetime.now()
-            call([driver, vfile.name, tfile.name])
-            times[di].append((datetime.datetime.now() - start).total_seconds())
-            di += 1
+        for di, driver in enumerate(drivers):
+            testtimes = []
+            for i in range(NUMBER_OF_TEST_ITERATIONS):
+                start = datetime.datetime.now()
+                call([driver, vfile.name, tfile.name])
+                (testtimes.append((datetime.datetime.now() - start)
+                 .total_seconds()))
+            times[di].append(sum(testtimes)/len(testtimes))
 
     plt.xkcd()
     # Drop our times on our plot. Sides count is our x, time y.
