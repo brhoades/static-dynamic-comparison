@@ -1,8 +1,8 @@
 template <class T, template <class T> class System, // T, System<T>
           template <class T, template <class T> class System> class Derived> // Shape<T, Cartesian<T>>
-bool Shape<T, System, Derived>::isInShape(const System<T>& p) const
+bool Shape<T, System, Derived>::isInShape(const CoordinateI<T>& p) const
 {
-  const auto p_xy = p.asCartesian();
+  const auto p_xy = static_cast<const Cartesian<T>&>(p);
   bool ret = false;
 
   for(int i=0, j=static_cast<long>(numSides())-1; i<numSides(); j=i++)

@@ -75,7 +75,7 @@ class Shape
     }
 
     // Bounding checks
-    bool isInShape(const System<T>& p) const;
+    bool isInShape(const CoordinateI<T>& p) const;
 };
 
 #include "shape.hpp"
