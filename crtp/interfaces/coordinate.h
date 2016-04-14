@@ -13,8 +13,15 @@
 #include <iostream>
 
 #include "coordinateI.h"
+#include "../consts.h"
 
 using namespace std;
+
+#ifndef USE_REAL_TYPE
+#define RTYPE CoordinateI<T>
+#else
+#define RTYPE Coordinate<T, Derived>
+#endif
 
 template <class T, template <class T> class Derived>
 class Coordinate;
@@ -26,43 +33,48 @@ template <class T, template <class T> class Derived>
 ostream& operator<<(ostream& os, const CoordinateI<T>& rhs);
 
 template <class T, template <class T> class Derived>
+// Flip on and off using our interface.
+#ifndef USE_REAL_TYPE
 class Coordinate: public CoordinateI<T>
+#else
+class Coordinate
+#endif
 {
   public:
-    virtual CoordinateI<T>& operator=(const CoordinateI<T>& rhs)
+    virtual RTYPE& operator=(const RTYPE& rhs)
     {
       return static_cast<Derived<T>&>(*this).operator=(
           static_cast<const Coordinate<T, Derived>&>(rhs));
     }
 
     // Arithmetic
-    virtual CoordinateI<T>& operator+=(const CoordinateI<T>& rhs)
+    virtual RTYPE& operator+=(const RTYPE& rhs)
     {
       // If we don't cast to Coordinate here, it tries to call our derived
       // class's == on CoordinateI.
       return static_cast<Coordinate<T,Derived>&>(*this) += rhs;
     }
-    virtual CoordinateI<T>& operator-=(const CoordinateI<T>& rhs)
+    virtual RTYPE& operator-=(const RTYPE& rhs)
     {
       return static_cast<Coordinate<T,Derived>&>(*this) -= rhs;
     }
 
     // Transformation
-    virtual CoordinateI<T>& operator/=(const T& rhs)
+    virtual RTYPE& operator/=(const T& rhs)
     {
       return static_cast<Derived<T>*>(this)->operator/=(rhs);
     }
-    virtual CoordinateI<T>& operator*=(const T& rhs)
+    virtual RTYPE& operator*=(const T& rhs)
     {
       return static_cast<Derived<T>*>(this)->operator*=(rhs);
     }
 
     // Coordinate comparison
-    virtual bool operator==(const CoordinateI<T>& rhs) const
+    virtual bool operator==(const RTYPE& rhs) const
     {
       return static_cast<const Coordinate<T, Derived>&>(*this) == rhs;
     }
-    virtual bool operator!=(const CoordinateI<T>& rhs) const
+    virtual bool operator!=(const RTYPE& rhs) const
     {
       return static_cast<const Coordinate<T, Derived>&>(*this) != rhs;
     }

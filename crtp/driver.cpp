@@ -8,6 +8,7 @@
 
 #include <iostream>
 
+#include "consts.h"
 #include "coordinates/cartesian.h"
 #include "coordinates/polar.h"
 
@@ -40,7 +41,13 @@ int main(int argc, char** argv)
 
   // This is significantly faster, but not comparable to standard
   // Polygon<double,Cartesian> shape;
+  #ifndef USE_REAL_TYPE
   Polygon<double,CoordinateI> shape;
+  cout << "HELLO COORDINATEI" << endl;
+  #else
+  Polygon<double,Cartesian> shape;
+  cout << "NO COORDINATE INTERFACE." << endl;
+  #endif
 
   cout << "Adding vertices: ";
   for(auto& p: vertices)

@@ -25,6 +25,8 @@ Cartesian<T>::Cartesian(const Cartesian<T>& other): Cartesian(other.m_x,
 {
 }
 
+// If you weren't lazy, you could specialize for Coordinate <T, Polar> to avoid
+// additional calls to static_cast. -O2 may take care of this for you.
 template <class T>
 template <template <class> class System>
 Coordinate<T, Cartesian>& Cartesian<T>::operator=(const Coordinate<T, System>& rhs)

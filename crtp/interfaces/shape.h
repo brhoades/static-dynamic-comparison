@@ -10,6 +10,7 @@
 #pragma once
 
 #include "coordinate.h"
+#include "../consts.h"
 
 template <class T, template <class> class System, // T, System<T>
           template <class, template <class> class> class Derived> // Shape<T, Cartesian<T>>
@@ -75,7 +76,11 @@ class Shape
     }
 
     // Bounding checks
+    #ifndef USE_REAL_TYPE
     bool isInShape(const CoordinateI<T>& p) const;
+    #else
+    bool isInShape(const Coordinate<T, System>& p) const;
+    #endif
 };
 
 #include "shape.hpp"

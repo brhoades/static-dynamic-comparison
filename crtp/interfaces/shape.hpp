@@ -1,6 +1,10 @@
 template <class T, template <class T> class System, // T, System<T>
           template <class T, template <class T> class System> class Derived> // Shape<T, Cartesian<T>>
+#ifndef USE_REAL_TYPE
 bool Shape<T, System, Derived>::isInShape(const CoordinateI<T>& p) const
+#else
+bool Shape<T, System, Derived>::isInShape(const Coordinate<T, System>& p) const
+#endif
 {
   const auto p_xy = static_cast<const Cartesian<T>&>(p);
   bool ret = false;

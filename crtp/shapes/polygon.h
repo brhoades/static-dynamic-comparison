@@ -7,8 +7,10 @@
  */
 #pragma once
 
+// Huge speed change here.
 #include <vector>
 
+#include "../consts.h"
 #include "../interfaces/shape.h"
 
 template <class T, template <class T> class System>
@@ -26,8 +28,13 @@ class Polygon: public Shape<T,System,Polygon>
     ~Polygon();
 
     // Accesss member points
+    #ifndef USE_REAL_TYPE
     CoordinateI<T>* operator[](const size_t index);
     const CoordinateI<T>* operator[](const size_t index) const;
+    #else
+    System<T>* operator[](const size_t index);
+    const System<T>* operator[](const size_t index) const;
+    #endif
 
     // Polygon comparison
     bool operator==(const Shape<T,System,Polygon>&) const;
@@ -45,11 +52,20 @@ class Polygon: public Shape<T,System,Polygon>
     T sideLength() const;
     T perimeter() const;
 
-    // Get coordinates for corners (noncircle).
-    CoordinateI<T>** getPoints();
     Cartesian<T> center() const;
+
+    // Get coordinates for corners (noncircle).
+    #ifndef USE_REAL_TYPE
+    CoordinateI<T>** getPoints();
+    #else
+    System<T>** getPoints();
+    #endif
   private:
+    #ifndef USE_REAL_TYPE
     vector<CoordinateI<T>*> m_vertices;
+    #else
+    vector<System<T>*> m_vertices;
+    #endif
 };
 
 #include "polygon.hpp"

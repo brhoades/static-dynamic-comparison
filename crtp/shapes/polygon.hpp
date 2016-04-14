@@ -15,7 +15,7 @@ template <class T,template <class T> class System>
 Polygon<T,System>::Polygon(const Polygon<T,System>& other): Polygon()
 {
   for(auto& p: other.m_vertices)
-    m_vertices.push_back(new Coordinate<T,System>(p));
+    m_vertices.push_back(new System<T>(p));
 }
 
 template <class T,template <class T> class System>
@@ -27,7 +27,11 @@ Polygon<T,System>::~Polygon()
 
 // Accesss member points
 template <class T,template <class T> class System>
+#ifndef USE_REAL_TYPE
 CoordinateI<T>* Polygon<T,System>::operator[](const size_t index)
+#else
+System<T>* Polygon<T,System>::operator[](const size_t index)
+#endif
 {
   if(m_vertices.size() <= index)
     throw out_of_range("Provided index is out of bounds for this shape.");
@@ -35,7 +39,11 @@ CoordinateI<T>* Polygon<T,System>::operator[](const size_t index)
   return m_vertices[index];
 }
 template <class T,template <class T> class System>
+#ifndef USE_REAL_TYPE
 const CoordinateI<T>* Polygon<T,System>::operator[](const size_t index) const
+#else
+const System<T>* Polygon<T,System>::operator[](const size_t index) const
+#endif
 {
   if(m_vertices.size() <= index)
     throw out_of_range("Provided index is out of bounds for this shape.");
@@ -86,20 +94,22 @@ template <class T,template <class T> class System>
 void Polygon<T,System>::addVertex(const Cartesian<T>& coord)
 {
   // really forcing this interface
+  #ifndef USE_REAL_TYPE
   m_vertices.push_back(new Cartesian<T>(coord));
+  #else
+  m_vertices.push_back(new System<T>(coord));
+  #endif
 }
 
 template <class T,template <class T> class System>
 T Polygon<T,System>::area() const
 {
-  // abuse our interface here for maximum slow.
-
   // get average of any two points (first two will do)
-  Cartesian<T> midpoint = *m_vertices[0];
+  System<T>& midpoint = *m_vertices[0];
   midpoint += *m_vertices[1] /= 2;
 
   // 1/2 apothom * perimeter
-  return((1/2.f) * this->center().distance(midpoint)*perimeter());
+  return((1/2.f) * center().distance(midpoint)*perimeter());
 }
 
 template <class T,template <class T> class System>
@@ -111,7 +121,11 @@ T Polygon<T,System>::sideLength() const
 
 // Get coordinates for corners (noncircle).
 template <class T,template <class T> class System>
+#ifndef USE_REAL_TYPE
 CoordinateI<T>** Polygon<T,System>::getPoints()
+#else
+System<T>** Polygon<T,System>::getPoints()
+#endif
 {
   return m_vertices.data();
 }
