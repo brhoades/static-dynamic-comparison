@@ -10,6 +10,7 @@
 #pragma once
 
 #include "coordinate.h"
+#include <vector>
 
 template <class T>
 class Shape
@@ -37,7 +38,6 @@ class Shape
     virtual T perimeter() const                                            = 0;
 
     // Get coordinates for corners (noncircle), center (circle).
-    virtual Coordinate<T>** getPoints()                                    = 0;
     virtual Cartesian<T> center() const                                    = 0;
 
     // Bounding checks

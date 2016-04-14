@@ -9,14 +9,15 @@
 
 #include <iostream>
 #include <fstream>
-#include <vector>
+#include <limits>
 
 using namespace std;
 
 template <class T, template <class T> class System>
 struct CoordReader
 {
-   vector<System<T>> operator()(const char* fname) const;
+   System<T>* operator()(const char* fname);
+   size_t m_size;
 };
 
 #include "reader.hpp"

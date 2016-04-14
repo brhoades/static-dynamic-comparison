@@ -33,18 +33,20 @@ int main(int argc, char** argv)
 
   CoordReader<double,Cartesian> reader;
 
-  vector<Cartesian<double>> vertices = reader(argv[1]);
-  vector<Cartesian<double>> testers = reader(argv[2]);
-  cout << "Standard: Processing a " << vertices.size()
-       << "-sided polygon with " << testers.size() << " test points." << endl;
+  Cartesian<double>* vertices = reader(argv[1]);
+  size_t num_vertices = reader.m_size-1;
+  Cartesian<double>* testers = reader(argv[2]);
+  cout << "Standard: Processing a " << num_vertices
+       << "-sided polygon with " << reader.m_size << " test points." << endl;
 
-  Polygon<double> shape;
+  Polygon<double> shape(num_vertices, vertices);
 
-  for(auto& p: vertices)
-    shape.addVertex(p);
-
-  for(auto& p: testers)
-    shape.isInShape(p);
+  for(auto i=0u; i<reader.m_size; i++)
+  {
+    cout << testers[i] << endl;
+    cout << i << endl;
+    shape.isInShape(testers[i]);
+  }
 
   return 0;
 }

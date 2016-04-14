@@ -20,6 +20,7 @@ class Polygon: public Shape<T>
   public:
     Polygon();
     Polygon(const Polygon<T>& other);
+    Polygon(const size_t size, Coordinate<T>* points);
     virtual ~Polygon();
 
     // Accesss member points
@@ -36,17 +37,15 @@ class Polygon: public Shape<T>
 
     virtual size_t numSides() const;
 
-    void addVertex(const Cartesian<T>&);
-    
     virtual T area() const;
     virtual T sideLength() const;
     virtual T perimeter() const;
 
     // Get coordinates for corners (noncircle).
-    virtual Coordinate<T>** getPoints();
     virtual Cartesian<T> center() const;
   private:
-    vector<Coordinate<T>*> m_vertices;
+    Coordinate<T>** m_vertices;
+    size_t m_sides;
 };
 
 #include "polygon.hpp"
