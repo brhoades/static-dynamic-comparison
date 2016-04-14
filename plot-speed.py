@@ -12,6 +12,9 @@ from subprocess import call
 from shapely.geometry.polygon import Polygon
 from matplotlib import pyplot as plt
 
+# The number of tests we do per size (to average)
+NUMBER_OF_TEST_ITERATIONS = 5
+
 
 def build(folder):
     """
@@ -118,12 +121,14 @@ def graph(types):
         sideslist.append(sides)
         vfile, tfile = create_ngon_files(sides)
 
-        di = 0
-        for driver in drivers:
-            start = datetime.datetime.now()
-            call([driver, vfile.name, tfile.name])
-            times[di].append((datetime.datetime.now() - start).total_seconds())
-            di += 1
+        for di, driver in enumerate(drivers):
+            testtimes = []
+            for i in range(NUMBER_OF_TEST_ITERATIONS):
+                start = datetime.datetime.now()
+                call([driver, vfile.name, tfile.name])
+                (testtimes.append((datetime.datetime.now() - start)
+                 .total_seconds()))
+            times[di].append(sum(testtimes)/len(testtimes))
 
     plt.xkcd()
     # Drop our times on our plot. Sides count is our x, time y.
