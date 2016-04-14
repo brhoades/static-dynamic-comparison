@@ -47,7 +47,8 @@ class Polar: public Coordinate<T, Polar>
     T& operator[](const size_t index);
     T operator[](const size_t index) const;
 
-    T distance(const Coordinate<T, Polar>&) const;
+    template <template <class> class System>
+    T distance(const Coordinate<T, System>&) const;
 
     operator Cartesian<T>() const;
     void fromCartesian(const Cartesian<T>&);

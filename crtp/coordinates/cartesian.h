@@ -21,7 +21,6 @@ template <class T>
 ostream& operator<<(ostream&, const Cartesian<T>&);
 
 #include "../interfaces/coordinate.h"
-#include "../interfaces/coordinate.h"
 
 template <class T>
 class Cartesian: public Coordinate<T, Cartesian>
@@ -50,22 +49,22 @@ class Cartesian: public Coordinate<T, Cartesian>
     template <template <class> class System>
     bool operator!=(const Coordinate<T, System>&) const;
 
-    T& operator[](const size_t index);
-    T operator[](const size_t index) const;
+    inline T& operator[](const size_t index);
+    inline T operator[](const size_t index) const;
 
     template <template <class> class System>
-    T distance(const Coordinate<T, System>&) const;
+    inline T distance(const Coordinate<T, System>&) const;
 
     operator Cartesian<T>() const;
 
     // From a cartesian point
     void fromCartesian(const Cartesian<T>&);
 
-    T& x() {return m_x;}
-    T x() const {return m_x;}
+    inline T& x() {return m_x;}
+    inline T x() const {return m_x;}
 
-    T& y() {return m_y;}
-    T y() const {return m_y;}
+    inline T& y() {return m_y;}
+    inline T y() const {return m_y;}
 
   protected:
     T m_x, m_y;

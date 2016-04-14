@@ -23,7 +23,7 @@ template <class T>
 template <template <class> class System>
 Coordinate<T, Polar>& Polar<T>::operator=(const Coordinate<T, System>& rhs)
 {
-  fromCartesian(static_cast<const Cartesian<T>&>(rhs));
+  fromCartesian(static_cast<const Cartesian<T>>(rhs));
 
   return *this;
 }
@@ -33,7 +33,7 @@ template <class T>
 template <template <class> class System>
 Coordinate<T, Polar>& Polar<T>::operator+=(const Coordinate<T, System>& rhs)
 {
-  fromCartesian(static_cast<Cartesian<T>&>(this) += rhs);
+  fromCartesian(static_cast<Cartesian<T>>(this) += rhs);
 
   return *this;
 }
@@ -42,8 +42,6 @@ template <class T>
 template <template <class> class System>
 Coordinate<T, Polar>& Polar<T>::operator-=(const Coordinate<T, System>& rhs)
 {
-  fromCartesian(static_cast<Cartesian<T>&>(this) -= rhs);
-
   return *this;
 }
 
@@ -51,7 +49,8 @@ Coordinate<T, Polar>& Polar<T>::operator-=(const Coordinate<T, System>& rhs)
 template <class T>
 Coordinate<T, Polar>& Polar<T>::operator/=(const T& rhs)
 {
-  fromCartesian(static_cast<Cartesian<T>&>(this) /= rhs);
+  for(auto i=0; i<2; i++)
+    operator[](i) /= rhs;
 
   return *this;
 }
@@ -59,7 +58,8 @@ Coordinate<T, Polar>& Polar<T>::operator/=(const T& rhs)
 template <class T>
 Coordinate<T, Polar>& Polar<T>::operator*=(const T& rhs)
 {
-  fromCartesian(static_cast<Cartesian<T>&>(this) *= rhs);
+  for(auto i=0; i<2; i++)
+    operator[](i) *= rhs;
 
   return *this;
 }
@@ -103,10 +103,11 @@ T Polar<T>::operator[](const size_t index) const
 }
 
 template <class T>
-T Polar<T>::distance(const Coordinate<T, Polar>& other) const
+template <template <class> class System>
+T Polar<T>::distance(const Coordinate<T, System>& other) const
 {
-  const Cartesian<T>& this_cartesian = static_cast<const Cartesian<T>&>(*this);
-  const Cartesian<T>& other_cartesian = static_cast<const Cartesian<T>&>(other);;
+  const Cartesian<T>& this_cartesian = static_cast<const Cartesian<T>>(*this);
+  const Cartesian<T>& other_cartesian = static_cast<const Cartesian<T>>(other);;
 
   T x = this_cartesian.x() - other_cartesian.x(),
     y = this_cartesian.y() - other_cartesian.y();

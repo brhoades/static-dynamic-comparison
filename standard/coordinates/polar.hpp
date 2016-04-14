@@ -31,7 +31,7 @@ Coordinate<T>& Polar<T>::operator=(const Coordinate<T>& rhs)
 template <class T>
 Coordinate<T>& Polar<T>::operator+=(const Coordinate<T>& rhs)
 {
-  fromCartesian(static_cast<Cartesian<T>&>(*this) += rhs);
+  fromCartesian(static_cast<Cartesian<T>>(*this) += rhs);
 
   return *this;
 }
@@ -39,7 +39,7 @@ Coordinate<T>& Polar<T>::operator+=(const Coordinate<T>& rhs)
 template <class T>
 Coordinate<T>& Polar<T>::operator-=(const Coordinate<T>& rhs)
 {
-  fromCartesian(static_cast<Cartesian<T>&>(*this) -= rhs);
+  fromCartesian(static_cast<Cartesian<T>>(*this) -= rhs);
 
   return *this;
 }
@@ -48,7 +48,7 @@ Coordinate<T>& Polar<T>::operator-=(const Coordinate<T>& rhs)
 template <class T>
 Coordinate<T>& Polar<T>::operator/=(const T& rhs)
 {
-  fromCartesian(static_cast<Cartesian<T>&>(*this) /= rhs);
+  fromCartesian(static_cast<Cartesian<T>>(*this) /= rhs);
 
   return *this;
 }
@@ -56,7 +56,7 @@ Coordinate<T>& Polar<T>::operator/=(const T& rhs)
 template <class T>
 Coordinate<T>& Polar<T>::operator*=(const T& rhs)
 {
-  fromCartesian(static_cast<Cartesian<T>&>(*this) *= rhs);
+  fromCartesian(static_cast<Cartesian<T>>(*this) *= rhs);
 
   return *this;
 }
@@ -100,8 +100,8 @@ T Polar<T>::operator[](const size_t index) const
 template <class T>
 T Polar<T>::distance(const Coordinate<T>& other) const
 {
-  const Cartesian<T>& this_cartesian = static_cast<Cartesian<T>&>(*this);
-  const Cartesian<T>& other_cartesian = other.asCartesian();
+  const Cartesian<T>& this_cartesian = static_cast<Cartesian<T>>(*this);
+  const Cartesian<T>& other_cartesian = static_cast<Cartesian<T>>(other);
   T x = this_cartesian.x() - other_cartesian.x(),
     y = this_cartesian.y() - other_cartesian.y();
 

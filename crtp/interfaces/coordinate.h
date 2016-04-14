@@ -12,7 +12,9 @@
 #include <cstdlib>
 #include <iostream>
 
+#ifndef USE_REAL_TYPE
 #include "coordinateI.h"
+#endif
 #include "../consts.h"
 
 using namespace std;
@@ -28,9 +30,6 @@ class Coordinate;
 
 template <class T>
 class Cartesian;
-
-template <class T, template <class T> class Derived>
-ostream& operator<<(ostream& os, const CoordinateI<T>& rhs);
 
 template <class T, template <class T> class Derived>
 // Flip on and off using our interface.

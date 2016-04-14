@@ -31,6 +31,16 @@ int main(int argc, char** argv)
     return 0;
   }
 
+  // We must use our interface for both types or -O2/-O3 will compile it out.
+  Polar<double> x(3, 2);
+  Coordinate<double>& y = x;
+
+  y.distance(x);
+
+  Polar<float> a(3, 2);
+  Coordinate<float>& b = a;
+
+  b.distance(a);
   CoordReader<double,Cartesian> reader;
 
   vector<Cartesian<double>> vertices = reader(argv[1]);

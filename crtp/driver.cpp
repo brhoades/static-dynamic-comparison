@@ -39,14 +39,23 @@ int main(int argc, char** argv)
   cout << "CRTP: Processing a " << vertices.size()
        << "-sided polygon with " << testers.size() << " test points." << endl;
 
-  // This is significantly faster, but not comparable to standard
-  // Polygon<double,Cartesian> shape;
   #ifndef USE_REAL_TYPE
   Polygon<double,CoordinateI> shape;
-  cout << "HELLO COORDINATEI" << endl;
+
+  // We must use our interface for both types or -O2/-O3 will compile it out.
+  Polar<double> z(3, 2);
+  Coordinate<double, Polar>& x = z;
+  CoordinateI<double>& y = x;
+  y.distance(z);
   #else
+  // This is significantly faster, but not comparable to standard
   Polygon<double,Cartesian> shape;
-  cout << "NO COORDINATE INTERFACE." << endl;
+
+  // We must use our "interface" here or we won't instantiate it and -O2/-O3
+  // get zealous.
+  Polar<double> x(3, 2);
+  Coordinate<double, Polar>& y = x;
+  y.distance(x);
   #endif
 
   for(auto& p: vertices)

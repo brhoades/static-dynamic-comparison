@@ -29,11 +29,11 @@ class Polygon: public Shape<T,System,Polygon>
 
     // Accesss member points
     #ifndef USE_REAL_TYPE
-    CoordinateI<T>* operator[](const size_t index);
-    const CoordinateI<T>* operator[](const size_t index) const;
+    inline CoordinateI<T>* operator[](const size_t index);
+    inline const CoordinateI<T>* operator[](const size_t index) const;
     #else
-    System<T>* operator[](const size_t index);
-    const System<T>* operator[](const size_t index) const;
+    inline System<T>* operator[](const size_t index);
+    inline const System<T>* operator[](const size_t index) const;
     #endif
 
     // Polygon comparison
@@ -44,15 +44,15 @@ class Polygon: public Shape<T,System,Polygon>
     T operator+(const Shape<T,System,Polygon>&) const;
     T operator-(const Shape<T,System,Polygon>&) const;
 
-    size_t numSides() const;
+    inline size_t numSides() const;
 
-    void addVertex(const Cartesian<T>&);
+    inline void addVertex(const Cartesian<T>&);
     
-    T area() const;
-    T sideLength() const;
-    T perimeter() const;
+    inline T area() const;
+    inline T sideLength() const;
+    inline T perimeter() const;
 
-    Cartesian<T> center() const;
+    inline Cartesian<T> center() const;
 
     // Get coordinates for corners (noncircle).
     #ifndef USE_REAL_TYPE
