@@ -8,7 +8,9 @@ import math
 import tempfile
 import datetime
 import argparse
+import numpy as np
 
+import scipy.interpolate as interpolate
 from subprocess import call
 from shapely.geometry.polygon import Polygon
 from matplotlib import pyplot as plt
@@ -20,11 +22,16 @@ parser.add_argument('--start', type=int, dest='start',
 parser.add_argument('end', type=int,
                     help='number of sides to end with')
 parser.add_argument('--title', dest='title', action='store')
+parser.add_argument('--smooth', dest='smooth', action='store',
+                    default=0.2)
 
 args = parser.parse_args()
 
 # The number of tests we do per size (to average)
 NUMBER_OF_TEST_ITERATIONS = 5
+
+# How much smoothing we do to our graph
+SPLINE_SMOOTH = args.smooth
 
 
 def build(folder):
@@ -117,6 +124,22 @@ def create_polygon(n):
         yield (centerx + R*math.cos(angle), centery + R*math.sin(angle))
 
 
+def spline_data(x, y):
+    """
+    Smooths out a passed list of data.
+
+    Returns a x, y where x now contains 100x the resolution and y is splined
+    to match.
+    """
+    x_sm = np.array(x)
+
+    x_smooth = np.linspace(x_sm.min(), x_sm.max(), len(x)*100)
+    ysp = interpolate.UnivariateSpline(x, y)
+    ysp.set_smoothing_factor(SPLINE_SMOOTH)
+
+    return x_smooth, ysp(x_smooth)
+
+
 def graph(types):
     """
     Gathers information about passed types (folders in this directory),
@@ -142,10 +165,11 @@ def graph(types):
                  .total_seconds()))
             times[di].append(sum(testtimes)/len(testtimes))
 
-    plt.xkcd()
+    plt.style.use('https://gist.githubusercontent.com/CamDavidsonPilon/5238b6499b14604367ac/raw/18c986f76be6627161f2d2ee5735ee12bc9eb29b/538.json')
     # Drop our times on our plot. Sides count is our x, time y.
     for type in types:
-        plt.plot(sideslist, times[types.index(type)], label=type)
+        x_sm, y_sm = spline_data(sideslist, times[types.index(type)])
+        plt.plot(x_sm, y_sm, label=type)
 
     # Give us a legend on the top right, on the graph a bit.
     plt.legend(bbox_to_anchor=(0.8, 1), loc=2, borderaxespad=0.)
