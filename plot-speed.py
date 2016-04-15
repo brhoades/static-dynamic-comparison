@@ -172,7 +172,7 @@ def graph(types):
         plt.plot(x_sm, y_sm, label=type, linewidth=3)
 
     # Give us a legend on the top right, on the graph a bit.
-    plt.legend(bbox_to_anchor=(0.8, 1), loc=2, borderaxespad=0.)
+    plt.legend(bbox_to_anchor=(1, 0), loc=4, borderaxespad=0.)
     plt.xlabel("Number of sides and test points")
     plt.ylabel("Time elapsed (seconds)")
     plt.title(args.title)
