@@ -165,17 +165,20 @@ def graph(types):
                  .total_seconds()))
             times[di].append(sum(testtimes)/len(testtimes))
 
-    plt.style.use('https://gist.githubusercontent.com/CamDavidsonPilon/5238b6499b14604367ac/raw/18c986f76be6627161f2d2ee5735ee12bc9eb29b/538.json')
+    plt.style.use('ggplot')
     # Drop our times on our plot. Sides count is our x, time y.
     for type in types:
         x_sm, y_sm = spline_data(sideslist, times[types.index(type)])
-        plt.plot(x_sm, y_sm, label=type)
+        plt.plot(x_sm, y_sm, label=type, linewidth=3)
 
     # Give us a legend on the top right, on the graph a bit.
     plt.legend(bbox_to_anchor=(0.8, 1), loc=2, borderaxespad=0.)
     plt.xlabel("Number of sides and test points")
     plt.ylabel("Time elapsed (seconds)")
     plt.title(args.title)
+    plt.savefig("{}_{}.png".format(args.title.lower().replace(" ", "_"),
+                                   args.end),
+                format="png")
     plt.show()
 
 
