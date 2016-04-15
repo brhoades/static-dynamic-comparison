@@ -13,7 +13,7 @@ Usage
 Install the requirements listed in requirements.txt. You can then create graphs
 with the following:
 
-  python plot-speed.py 10000 --title "Plot title" --start 100
+> python plot-speed.py 10000 --title "Plot title" --start 100
 
 This will generate a graph of the two implementation's performance in time versus
 sides of a polygon. It goes up to 10,000 sides with 10,000 test points. The graph
@@ -21,7 +21,7 @@ starts at 100 and has the title of "Plot title".
 
 More information can be found:
 
-  python plot-speed.py --help
+> python plot-speed.py --help
 
 Example Implementations
 -----------------------
@@ -33,11 +33,13 @@ a pure static implementation.
 
 Both code perform identically. Their driver takes two files. The first file
 defines verticies for a regular polygon. The vertices must be cartesian and the
-file must list them like so:
+file must list them like so::
 
+```
   0 0
   1 1
   2 2
+```
 
 Where coordinates above are (0, 0), (1, 1), and (2, 2). The second file contains
 coordinates for testing. The program will check if the shape defined from the first
