@@ -6,18 +6,21 @@ bool Shape<T, System, Derived>::isInShape(const CoordinateI<T>& p) const
 bool Shape<T, System, Derived>::isInShape(const Coordinate<T, System>& p) const
 #endif
 {
-  const auto p_xy = static_cast<const Cartesian<T>&>(p);
   bool ret = false;
 
   for(int i=0, j=static_cast<long>(numSides())-1; i<numSides(); j=i++)
   {
+    #ifndef USE_REAL_TYPE
     // being an interface, they should be castable to cartesian (a nonvirt base).
-    const Cartesian<T>& verti = static_cast<const Cartesian<T>&>(*operator[](i));
-    const Cartesian<T>& vertj = static_cast<const Cartesian<T>&>(*operator[](j));
+    const CoordinateI<T>& verti = *operator[](i);
+    const CoordinateI<T>& vertj = *operator[](j);
+    #else
+    const System<T>& verti = *operator[](i);
+    const System<T>& vertj = *operator[](j);
+    #endif
 
-
-    if((verti.y()>p_xy.y()) != (vertj.y()>p_xy.y()) && 
-       (p_xy.x() < (vertj.x() - verti.x()) * (p_xy.y()-verti.y()) / (vertj.y()-verti.y()) + verti.x()))
+    if((verti.y()>p.y()) != (vertj.y()>p.y()) && 
+       (p.x() < (vertj.x() - verti.x()) * (p.y()-verti.y()) / (vertj.y()-verti.y()) + verti.x()))
       ret = !ret;
   }
 
