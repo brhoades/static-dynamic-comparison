@@ -7,10 +7,21 @@ import random
 import math
 import tempfile
 import datetime
+import argparse
 
 from subprocess import call
 from shapely.geometry.polygon import Polygon
 from matplotlib import pyplot as plt
+
+parser = argparse.ArgumentParser(description='Process some integers.')
+parser.add_argument('--start', type=int, dest='start',
+                    help='number of sides to start with',
+                    default=100, action='store')
+parser.add_argument('end', type=int,
+                    help='number of sides to end with')
+parser.add_argument('--title', dest='title', action='store')
+
+args = parser.parse_args()
 
 # The number of tests we do per size (to average)
 NUMBER_OF_TEST_ITERATIONS = 5
@@ -23,6 +34,7 @@ def build(folder):
     folder = os.path.join(os.path.dirname(__file__), folder)
 
     # build
+    call(["make", "-C", folder, "clean"])
     call(["make", "-C", folder])
 
 
@@ -31,8 +43,8 @@ def create_ngon_files(n):
     Creates and returns two file names. The first one is a coordinate file
     for a n-sided polygon. It has n coordinates separated by new lines.
 
-    The second file is a test file. It has 2*n coordinates to test the
-    polygon with. n coordinates are inside the polygon, n coordinates are
+    The second file is a test file. It has n coordinates to test the
+    polygon with. n/2 coordinates are inside the polygon, n/2 coordinates are
     outside.
     """
     vertices = []
@@ -117,7 +129,7 @@ def graph(types):
     sideslist = []
     drivers = [os.path.join(type, "driver") for type in types]
 
-    for sides in range(3, 13000, 500):
+    for sides in range(args.start, args.end, 100):
         sideslist.append(sides)
         vfile, tfile = create_ngon_files(sides)
 
@@ -137,8 +149,12 @@ def graph(types):
 
     # Give us a legend on the top right, on the graph a bit.
     plt.legend(bbox_to_anchor=(0.8, 1), loc=2, borderaxespad=0.)
+    plt.xlabel("Number of sides and test points")
+    plt.ylabel("Time elapsed (seconds)")
+    plt.title(args.title)
     plt.show()
 
+
 if __name__ == "__main__":
-    TYPES = ["standard", "crtp"]
+    TYPES = ["standard", "crtp", "crtp-nodynamic"]
     graph(TYPES)
