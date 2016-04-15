@@ -31,8 +31,8 @@ other uses dynamic polymorphism (standard). By removing or adding the constant
 in crtp/consts.h, it will disable or enable a dynamic/static hybrid implementation versus
 a pure static implementation.
 
-Both code perform identically. Their driver takes two files. The first file
-defines verticies for a regular polygon. The vertices must be cartesian and the
+Both codebases do the same thing. Their drivers take two files. The first file
+defines vertices for a regular polygon. The vertices must be cartesian and the
 file must list them like so::
 
 ```
