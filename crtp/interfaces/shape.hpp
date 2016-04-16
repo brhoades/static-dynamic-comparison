@@ -8,7 +8,7 @@ bool Shape<T, System, Derived>::isInShape(const Coordinate<T, System>& p) const
 {
   bool ret = false;
 
-  for(int i=0, j=static_cast<long>(numSides())-1; i<numSides(); j=i++)
+  for(size_t i=0, j=numSides()-1; i<numSides(); j=i++)
   {
     #ifndef USE_REAL_TYPE
     // being an interface, they should be castable to cartesian (a nonvirt base).

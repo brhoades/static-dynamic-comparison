@@ -3,7 +3,7 @@ bool Shape<T>::isInShape(const Coordinate<T>& p) const
 {
   bool ret = false;
 
-  for(int i=0, j=static_cast<long>(numSides())-1; i<numSides(); j=i++)
+  for(size_t i=0, j=numSides()-1; i<numSides(); j=i++)
   {
     const Coordinate<T>& verti = operator[](i);
     const Coordinate<T>& vertj = operator[](j);
